@@ -27,14 +27,14 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
 
   bool _isLoading = false;
 
-  Uint8List ? _image;
+  Uint8List? _image;
 
   _singUpUsers()async{
     setState(() {
       _isLoading =true;
     });
      if(_formKey.currentState!.validate()){
-       await _authController.signUpUsers(email, fullName, phoneNumber, password).whenComplete(() {
+       await _authController.signUpUsers(email, fullName, phoneNumber, password,_image).whenComplete(() {
          setState(() {
            _formKey.currentState!.reset();
            _isLoading = false;
@@ -79,7 +79,7 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
                 ),
                 Stack(
                   children: [
-                      _image!=null? CircleAvatar(
+                      _image!=null ? CircleAvatar(
                       radius: 64,
                       backgroundColor: Colors.yellow.shade900,
                       backgroundImage: MemoryImage(_image!),
