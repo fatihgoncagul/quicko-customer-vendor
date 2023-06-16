@@ -1,0 +1,1 @@
+# quicko-customer-vendor
