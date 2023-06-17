@@ -18,8 +18,9 @@ class _MainVendorScreenState extends State<MainVendorScreen> {
   int _pageIndex = 0;
 
   List<Widget> _pages = [
-    ScanScreen(),
     UploadScreen(),
+    ScanScreen(),
+
     EditProductScreen(),
     VendorOrderScreen(),
     VendorLogoutScreen()
@@ -39,8 +40,9 @@ class _MainVendorScreenState extends State<MainVendorScreen> {
         selectedItemColor: Colors.yellow.shade900,
         type: BottomNavigationBarType.fixed,
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.scanner), label: "Scan"),
           BottomNavigationBarItem(icon: Icon(Icons.upload), label: "Upload"),
+          BottomNavigationBarItem(icon: Icon(Icons.scanner), label: "Scan"),
+
 
           BottomNavigationBarItem(icon: Icon(Icons.edit), label: "Edit"),
           BottomNavigationBarItem(

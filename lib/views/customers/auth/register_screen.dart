@@ -27,33 +27,33 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
 
   bool _isLoading = false;
 
-  Uint8List ? _image;
+  Uint8List? _image;
 
   _singUpUsers()async{
     setState(() {
       _isLoading =true;
     });
-     if(_formKey.currentState!.validate()){
-       await _authController.signUpUsers(email, fullName, phoneNumber, password).whenComplete(() {
-         setState(() {
-           _formKey.currentState!.reset();
-           _isLoading = false;
-         });
-       });
-       return showSnack(context, 'Account created succesfully');
-     }else{
-       setState(() {
-         _isLoading=false;
-       });
-        return showSnack(context, 'Please Fields must be not empty!');
-     }
+    if(_formKey.currentState!.validate()){
+      await _authController.signUpUsers(email, fullName, phoneNumber, password,_image).whenComplete(() {
+        setState(() {
+          _formKey.currentState!.reset();
+          _isLoading = false;
+        });
+      });
+      return showSnack(context, 'Account created succesfully');
+    }else{
+      setState(() {
+        _isLoading=false;
+      });
+      return showSnack(context, 'Please Fields must be not empty!');
+    }
   }
 
   selectGalleryImage()async{
-     Uint8List im = await _authController.pickProfileImage(ImageSource.gallery);
-     setState(() {
-       _image = im;
-     });
+    Uint8List im = await _authController.pickProfileImage(ImageSource.gallery);
+    setState(() {
+      _image = im;
+    });
   }
   selectCameraImage()async{
     Uint8List im = await _authController.pickProfileImage(ImageSource.camera);
@@ -73,13 +73,13 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text('Create Customer',
-                style:TextStyle(
-                  fontSize: 20,
+                  style:TextStyle(
+                    fontSize: 20,
                   ),
                 ),
                 Stack(
                   children: [
-                      _image!=null? CircleAvatar(
+                    _image!=null ? CircleAvatar(
                       radius: 64,
                       backgroundColor: Colors.yellow.shade900,
                       backgroundImage: MemoryImage(_image!),
@@ -89,14 +89,14 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
                       backgroundImage: NetworkImage('https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg'),
                     ),
                     Positioned(
-                        right: 0,
-                        top: 5,
-                        child: IconButton(
-                          onPressed: (){
-                            selectGalleryImage();
-                          },
-                          icon: Icon(CupertinoIcons.photo,color: Colors.white,),
-                        ),
+                      right: 0,
+                      top: 5,
+                      child: IconButton(
+                        onPressed: (){
+                          selectGalleryImage();
+                        },
+                        icon: Icon(CupertinoIcons.photo,color: Colors.white,),
+                      ),
                     ),
                   ],
                 ),
@@ -189,16 +189,16 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Center(
-                        child:_isLoading ? CircularProgressIndicator(
+                      child:_isLoading ? CircularProgressIndicator(
+                        color: Colors.white,
+                      ): Text('Sing Up',
+                        style: TextStyle(
                           color: Colors.white,
-                        ): Text('Sing Up',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 4,
-                          ),
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 4,
                         ),
+                      ),
                     ),
                   ),
                 ),
@@ -210,8 +210,8 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
                       onPressed: (){
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context){
-                          return LoginScreen();
-                        }));
+                              return LoginScreen();
+                            }));
                       },
                       child: Text('Login'),
                     ),
