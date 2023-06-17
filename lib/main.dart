@@ -2,18 +2,19 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutterfire_ui/auth.dart';
 import 'package:provider/provider.dart';
 import 'package:quicko/provider/cart_provider.dart';
 import 'package:quicko/provider/product_provider.dart';
 import 'package:quicko/vendor/views/auth/vendor_auth.dart';
-import 'package:quicko/vendor/views/auth/vendor_registor.dart';
 import 'package:quicko/vendor/views/screens/landing_screen.dart';
 import 'package:quicko/vendor/views/screens/main_vendor_screen.dart';
-import 'package:quicko/views/customers/auth/login_screen.dart';
-import 'package:quicko/views/customers/auth/register_screen.dart';
+import 'package:quicko/vendor/views/screens/vendor_logout_screen.dart';
 import 'package:quicko/views/customers/main_screen.dart';
-import 'package:quicko/views/customers/nav_screens/home_screen.dart';
 import 'package:quicko/views/customers/nav_screens/payment/generateQR_screen.dart';
+
+import 'vendor/views/auth/vendor_registor.dart';
+import 'views/customers/auth/login_screen.dart';
 
 
 void main() async{
@@ -46,7 +47,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/', // optional if your initial screen is LoginScreen
       routes: {
-        '/': (context) => MainScreen(), // optional if your initial screen is LoginScreen
+        '/': (context) => LoginScreen(), // optional if your initial screen is LoginScreen
         '/generateQRScreen': (context) => GenerateQRScreen(),
       },
       builder: EasyLoading.init(),

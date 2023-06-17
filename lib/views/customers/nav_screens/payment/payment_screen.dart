@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
-class PaymentScreen extends StatelessWidget {
-  const PaymentScreen({super.key});
+class PaymentScreen extends StatefulWidget {
+  @override
+  _PaymentScreenState createState() => _PaymentScreenState();
+}
+
+class _PaymentScreenState extends State<PaymentScreen> {
+  String? _selectedMethod;
 
   @override
   Widget build(BuildContext context) {
@@ -65,34 +68,42 @@ class PaymentScreen extends StatelessWidget {
                 ),
               ),
             )
-
           ],
         ),
       ),
     );
   }
-}
 
-Widget paymentMethod(String title, String iconPath) {
-  return Container(
-    decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 2,
-              blurRadius: 5,
-              offset: Offset(0, 3))
-        ]),
-    child: ListTile(
-      title: Text(title),
-      leading: Container(
-        child: Image.asset(iconPath),
-        height: 50,
-        width: 50,
+  Widget paymentMethod(String title, String iconPath) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _selectedMethod = title;
+        });
+      },
+      child: Container(
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 2,
+                  blurRadius: 5,
+                  offset: Offset(0, 3))
+            ]),
+        child: ListTile(
+          title: Text(title),
+          leading: Container(
+            child: Image.asset(iconPath),
+            height: 50,
+            width: 50,
+          ),
+          trailing: _selectedMethod == title
+              ? Icon(Icons.check_circle, color: Colors.green)
+              : Icon(Icons.circle_outlined),
+        ),
       ),
-      trailing: Icon(Icons.circle_outlined),
-    ),
-  );
+    );
+  }
 }
