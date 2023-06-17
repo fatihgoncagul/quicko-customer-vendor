@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 import 'package:quicko/provider/product_provider.dart';
+import 'package:quicko/vendor/views/screens/main_vendor_screen.dart';
 import 'package:quicko/vendor/views/screens/upload_tab_screens/%C4%B1mages_screen.dart';
 import 'package:quicko/vendor/views/screens/upload_tab_screens/attributes_screen.dart';
 import 'package:quicko/vendor/views/screens/upload_tab_screens/general_screen.dart';
-import 'package:quicko/vendor/views/screens/upload_tab_screens/shipping_screen.dart';
 import 'package:uuid/uuid.dart';
 
 class UploadScreen extends StatelessWidget {
@@ -28,9 +29,6 @@ class UploadScreen extends StatelessWidget {
                 child: Text('General'),
               ),
               Tab(
-                child: Text('Shipping'),
-              ),
-              Tab(
                 child: Text('Attributes'),
               ),
               Tab(
@@ -42,7 +40,6 @@ class UploadScreen extends StatelessWidget {
           body: TabBarView(
             children: [
               GeneralScreen(),
-              ShippingScreen(),
               AttributesScreen(),
               ImagesScreen(),
             ],
@@ -50,10 +47,11 @@ class UploadScreen extends StatelessWidget {
           bottomSheet: Padding(
             padding: const EdgeInsets.all(8.0),
             child: ElevatedButton(style:
-              ElevatedButton.styleFrom(primary: Colors.yellow.shade900),onPressed: ()async{
-            if(_formKey.currentState!.validate()){
-
-            final productId = Uuid().v4();
+              ElevatedButton.styleFrom(primary: Colors.yellow.shade900),
+              onPressed: ()async{
+              EasyLoading.show(status: 'Please Wait');
+              if(_formKey.currentState!.validate()){
+              final productId = Uuid().v4();
               await _firestore.collection("products").doc(productId).set({
                 "productId": productId,
                 "productName": _productProvider.productData["productName"],
@@ -64,10 +62,15 @@ class UploadScreen extends StatelessWidget {
                 "imageUrlList": _productProvider.productData["imageUrlList"],
                 "imageUrlList": _productProvider.productData["imageUrlList"],
                 "brandName": _productProvider.productData["brandName"],
+              }).whenComplete((){
+                _productProvider.clearData();
+                _formKey.currentState!.reset();
+                EasyLoading.dismiss();
+                Navigator.push(context, MaterialPageRoute(builder: (context){
+                  return MainVendorScreen();
+                }));
               });
             }
-
-
             },child:Text("Save") ,),
           ),
         ),

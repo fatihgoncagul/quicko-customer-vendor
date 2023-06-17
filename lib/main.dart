@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/', // optional if your initial screen is LoginScreen
       routes: {
-        '/': (context) => CustomerRegisterScreen(), // optional if your initial screen is LoginScreen
+        '/': (context) => MainScreen(), // optional if your initial screen is LoginScreen
         '/generateQRScreen': (context) => GenerateQRScreen(),
       },
       builder: EasyLoading.init(),

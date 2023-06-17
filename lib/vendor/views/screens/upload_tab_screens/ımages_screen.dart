@@ -19,8 +19,10 @@ class _ImagesScreenState extends State<ImagesScreen> with AutomaticKeepAliveClie
   bool get wantKeepAlive => true;
   final ImagePicker picker = ImagePicker();
   final FirebaseStorage _storage = FirebaseStorage.instance;
+
   List<File> _image = [];
   List<String> _imageUrlList = [];
+
   chooseImage() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile == null) {
@@ -74,18 +76,18 @@ class _ImagesScreenState extends State<ImagesScreen> with AutomaticKeepAliveClie
             await ref.putFile(img).whenComplete(() async {
               await ref.getDownloadURL().then((value) {
                 setState(() {
-                  
                   _imageUrlList.add(value);
-                  _productProvider.getFormData(imageUrlList: _imageUrlList);
 
-                  EasyLoading.dismiss();
                 });
               });
             });
             }
-
-
-          }, child:_image.isNotEmpty? Text("Upload"):Text(" ")),
+            setState(() {
+              _productProvider.getFormData(imageUrlList: _imageUrlList);
+              EasyLoading.dismiss();
+            });
+          },
+            child:_image.isNotEmpty? Text("Upload"):Text(" ")),
         ],
       ),
     );

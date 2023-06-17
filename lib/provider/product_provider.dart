@@ -26,11 +26,11 @@ class ProductProvider with ChangeNotifier{
 
     }if(brandName!=null){
       productData ["brandName"] = brandName;
-
     }
+    notifyListeners();
   }
-
-
-
-
+  clearData(){
+    productData.clear();
+    notifyListeners();
+  }
 }
