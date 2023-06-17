@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
+import 'package:quicko/provider/cart_provider.dart';
 import 'package:quicko/provider/product_provider.dart';
 import 'package:quicko/vendor/views/auth/vendor_auth.dart';
 import 'package:quicko/vendor/views/auth/vendor_registor.dart';
@@ -21,6 +22,9 @@ void main() async{
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_){
       return ProductProvider();
+    }),
+    ChangeNotifierProvider(create: (_){
+      return CartProvider();
     })
   ],
   child: const MyApp()));

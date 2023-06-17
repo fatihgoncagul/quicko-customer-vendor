@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:provider/provider.dart';
+import 'package:quicko/provider/cart_provider.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   final dynamic productData;
@@ -16,6 +18,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final CartProvider _cartProvider = Provider.of<CartProvider>(context);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -136,36 +139,48 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       ),
       bottomSheet: Padding(
         padding: const EdgeInsets.all(10.0),
-        child: Container(
-          height: 50,
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: Colors.yellow.shade900,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: Icon(
-                  CupertinoIcons.cart,
-                  color: Colors.white,
-                  size: 24,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: Text(
-                  'Add to Cart',
-                  style: TextStyle(
+        child: InkWell(
+          onTap: () {
+            _cartProvider.addProductToCart(
+                widget.productData['productName'],
+                widget.productData['productId'],
+                widget.productData['imageUrlList'],
+                1,
+                widget.productData['productQuantity'],
+                widget.productData['productPrice'],
+                widget.productData['vendorId']);
+          },
+          child: Container(
+            height: 50,
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.yellow.shade900,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Icon(
+                    CupertinoIcons.cart,
                     color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
+                    size: 24,
                   ),
                 ),
-              ),
-            ],
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Text(
+                    'Add to Cart',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
+import 'package:quicko/provider/cart_provider.dart';
 import 'default_button.dart';
 import 'package:quicko/views/customers/nav_screens/payment/payment_screen.dart'; // Import PaymentScreen
 
@@ -13,6 +15,7 @@ class CheckoutCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final CartProvider _cartProvider = Provider.of<CartProvider>(context);
     SizeConfig().init(context);
     return Container(
       padding: EdgeInsets.symmetric(
@@ -31,7 +34,7 @@ class CheckoutCard extends StatelessWidget {
             offset: Offset(0, -15),
             blurRadius: 20,
             color: Color(0xFFDADADA).withOpacity(0.15),
-          )
+          ),
         ],
       ),
       child: SafeArea(
@@ -39,24 +42,6 @@ class CheckoutCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                Container(
-                  padding: EdgeInsets.all(10),
-                  height: getProportionateScreenWidth(40),
-                  width: getProportionateScreenWidth(40),
-                  child: Icon(Icons.receipt),
-                ),
-                Spacer(),
-                Text("Add voucher code"),
-                const SizedBox(width: 10),
-                Icon(
-                  Icons.arrow_forward_ios,
-                  size: 12,
-                  color: kTextColor,
-                )
-              ],
-            ),
             SizedBox(height: getProportionateScreenHeight(20)),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -66,7 +51,7 @@ class CheckoutCard extends StatelessWidget {
                     text: "Total:\n",
                     children: [
                       TextSpan(
-                        text: "\$337.15",
+                        text: _cartProvider.totalPrice.toStringAsFixed(2),
                         style: TextStyle(fontSize: 16, color: Colors.black),
                       ),
                     ],
