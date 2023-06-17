@@ -46,7 +46,7 @@ class AccountsScreen extends StatelessWidget {
                   child: CircleAvatar(
                     radius: 64,
                     backgroundColor: Colors.blue.shade900,
-                    backgroundImage: NetworkImage(data['profileImage']),
+                    //backgroundImage: NetworkImage(data['profileImage']),
                   ),
                 ),
                 Padding(

@@ -23,15 +23,15 @@ class AuthController{
   }
 
   pickProfileImage(ImageSource source)async{
-      final ImagePicker _imagePicker = ImagePicker();
-      XFile? _file = await _imagePicker.pickImage(source: source);
+    final ImagePicker _imagePicker = ImagePicker();
+    XFile? _file = await _imagePicker.pickImage(source: source);
 
-      if(_file!=null){
-          return await _file.readAsBytes();
-      }
-      else{
-        print('No Image Picked');
-      }
+    if(_file!=null){
+      return await _file.readAsBytes();
+    }
+    else{
+      print('No Image Picked');
+    }
   }
 
   Future<String> signUpUsers(String email,String fullName,String phoneNumber,String password, Uint8List? image)async{
@@ -66,14 +66,14 @@ class AuthController{
 
     try{
       if(email.isNotEmpty && password.isNotEmpty){
-          await _auth.signInWithEmailAndPassword(email: email, password: password);
-          res ='success';
+        await _auth.signInWithEmailAndPassword(email: email, password: password);
+        res ='success';
       }
       else{
         res='Please Fields must be not empty';
       }
     }catch(e){
-        res=e.toString();
+      res=e.toString();
     }
     return res;
   }
