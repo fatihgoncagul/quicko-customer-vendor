@@ -13,7 +13,8 @@ class _CategoryTextState extends State<CategoryText> {
 
   @override
   Widget build(BuildContext context) {
-    final Stream<QuerySnapshot> _categoryStream = FirebaseFirestore.instance.collection('categories').snapshots();
+    final Stream<QuerySnapshot> _categoryStream =
+    FirebaseFirestore.instance.collection('categories').snapshots();
     return Padding(
       padding: const EdgeInsets.all(9.0),
       child: Column(
@@ -21,12 +22,12 @@ class _CategoryTextState extends State<CategoryText> {
         children: [
           Text(
             'Categories',
-            style: TextStyle(fontSize: 19),
+            style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
           ),
+          SizedBox(height: 16),
           StreamBuilder<QuerySnapshot>(
             stream: _categoryStream,
-            builder:
-                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasError) {
                 return Text('Something went wrong');
               }
@@ -34,57 +35,49 @@ class _CategoryTextState extends State<CategoryText> {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text("Loading"),
+                  child: CircularProgressIndicator(),
                 );
               }
 
               return Container(
                 height: 40,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: snapshot.data!.docs.length,
-                          itemBuilder: (context, index) {
-                            final categoryData=snapshot.data!.docs[index];
-                            return Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: ActionChip(
-                                backgroundColor: Colors.yellow.shade900,
-                                onPressed: () {
-                                  setState(() {
-                                    _selectedCategory = categoryData['categoryName'];
-                                  });
-                                  print(_selectedCategory);
-                                },
-                                label: Center(
-                                  child: Text(
-                                    categoryData['categoryName'],
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            );
-                          }),
-                    ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.arrow_forward_ios),
-                    ),
-                  ],
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: (context, index) {
+                    final categoryData = snapshot.data!.docs[index];
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: ChoiceChip(
+                        backgroundColor: Colors.blue.shade300,
+                        selectedColor: Colors.blue.shade900,
+                        labelStyle: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        selected: _selectedCategory == categoryData['categoryName'],
+                        onSelected: (isSelected) {
+                          setState(() {
+                            _selectedCategory = isSelected ? categoryData['categoryName'] : null;
+                          });
+                          print(_selectedCategory);
+                        },
+                        label: Text(
+                          categoryData['categoryName'],
+                        ),
+                      ),
+                    );
+                  },
                 ),
               );
             },
           ),
-          if(_selectedCategory == null)
+          SizedBox(height: 16),
+          if (_selectedCategory == null)
             MainProductWidget(),
-          if(_selectedCategory != null)
-              HomeProductWidget(categoryName: _selectedCategory!),
+          if (_selectedCategory != null)
+            HomeProductWidget(categoryName: _selectedCategory!),
         ],
       ),
     );

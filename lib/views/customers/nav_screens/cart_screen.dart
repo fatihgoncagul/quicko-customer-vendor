@@ -89,9 +89,9 @@ class CartScreen extends StatelessWidget {
                                       onPressed: cartData.quantity == 1
                                           ? null
                                           : () {
-                                              _cartProvider
-                                                  .decreament(cartData);
-                                            },
+                                        _cartProvider
+                                            .decreament(cartData);
+                                      },
                                       icon: Icon(
                                         CupertinoIcons.minus,
                                         color: Colors.white,
@@ -105,11 +105,11 @@ class CartScreen extends StatelessWidget {
                                     ),
                                     IconButton(
                                       onPressed: cartData.productQuantity ==
-                                              cartData.quantity
+                                          cartData.quantity
                                           ? null
                                           : () {
-                                              _cartProvider.increment(cartData);
-                                            },
+                                        _cartProvider.increment(cartData);
+                                      },
                                       icon: Icon(
                                         CupertinoIcons.plus,
                                         color: Colors.white,

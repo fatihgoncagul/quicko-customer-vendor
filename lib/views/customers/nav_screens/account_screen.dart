@@ -2,9 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:quicko/views/customers/auth/login_screen.dart';
 
 class AccountsScreen extends StatelessWidget {
-  const AccountsScreen({Key? key}) : super(key: key);
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +14,6 @@ class AccountsScreen extends StatelessWidget {
       future: users.doc(FirebaseAuth.instance.currentUser!.uid).get(),
       builder:
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-
         if (snapshot.hasError) {
           return Text("Something went wrong");
         }
@@ -23,12 +23,16 @@ class AccountsScreen extends StatelessWidget {
         }
 
         if (snapshot.connectionState == ConnectionState.done) {
-          Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
+          Map<String, dynamic> data =
+              snapshot.data!.data() as Map<String, dynamic>;
           return Scaffold(
             appBar: AppBar(
               elevation: 2,
               backgroundColor: Colors.blue.shade900,
-              title: Text('Profile',style: TextStyle(letterSpacing: 4),),
+              title: Text(
+                'Profile',
+                style: TextStyle(letterSpacing: 4),
+              ),
               centerTitle: true,
               actions: [
                 Padding(
@@ -53,26 +57,20 @@ class AccountsScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     data['fullName'],
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold
-                    ),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     data['email'],
-                    style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold
-                    ),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(14.0),
                   child: Divider(
-                    thickness:2,
+                    thickness: 2,
                     color: Colors.grey,
                   ),
                 ),
@@ -88,11 +86,24 @@ class AccountsScreen extends StatelessWidget {
                   leading: Icon(Icons.shop),
                   title: Text("Cart"),
                 ),
+                ListTile(
+                  onTap:()async{
+                    await _auth.signOut().whenComplete(() {
+                      Navigator.push(context, MaterialPageRoute(builder: (context){
+                        return LoginScreen();
+                      },),);
+                    });
+                  },
+                  leading: Icon(Icons.logout),
+                  title: Text("Logout"),
+                ),
               ],
             ),
           );
         }
-        return CircularProgressIndicator();
+        return Center(
+          child: CircularProgressIndicator(),
+        );
       },
     );
   }
