@@ -45,9 +45,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
               height: 30,
             ),
             paymentMethod("Visa", "assets/images/visa.png"),
-            SizedBox(
-              height: 300,
-            ),
+            SizedBox(height: 200),
             GestureDetector(
               onTap: () => Navigator.of(context).pushNamed('/generateQRScreen'),
               child: Container(

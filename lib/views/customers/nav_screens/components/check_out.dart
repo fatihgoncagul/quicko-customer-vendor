@@ -29,7 +29,8 @@ class _CheckoutCardState extends State<CheckoutCard> {
     SizeConfig().init(context);
     return FutureBuilder<DocumentSnapshot>(
       future: users.doc(FirebaseAuth.instance.currentUser!.uid).get(),
-      builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+      builder:
+          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.hasError) {
           return Text("Something went wrong");
         }
@@ -39,7 +40,8 @@ class _CheckoutCardState extends State<CheckoutCard> {
         }
 
         if (snapshot.connectionState == ConnectionState.done) {
-          Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
+          Map<String, dynamic> data =
+              snapshot.data!.data() as Map<String, dynamic>;
           return Container(
             padding: EdgeInsets.symmetric(
               vertical: getProportionateScreenWidth(15),
@@ -75,7 +77,8 @@ class _CheckoutCardState extends State<CheckoutCard> {
                           children: [
                             TextSpan(
                               text: _cartProvider.totalPrice.toStringAsFixed(2),
-                              style: TextStyle(fontSize: 16, color: Colors.black),
+                              style:
+                                  TextStyle(fontSize: 16, color: Colors.black),
                             ),
                           ],
                         ),
@@ -83,38 +86,57 @@ class _CheckoutCardState extends State<CheckoutCard> {
                       SizedBox(
                         width: getProportionateScreenWidth(190),
                         child: InkWell(
-                          onTap: _cartProvider.totalPrice == 0.00 ? null : () {
-                            EasyLoading.show(status: 'Placing Order');
-                            _cartProvider.getCartItems.forEach((key, item) {
-                              final orderId =Uuid().v4();
-                              _firestore.collection('orders').doc(orderId).set({
-                                'orderId' : orderId,
-                                'vendorId' : item.vendorId,
-                                'email' : data['email'],
-                                'phone' : data['phoneNumber'],
-                                'address' : data['address'],
-                                'buyerId' : data['buyerId'],
-                                'fullName' : data['fullName'],
-                                'userPhoto' : data['profileImage'],
-                                'productName' : item.productName,
-                                'productPrice' : item.price,
-                                'productId' : item.productId,
-                                'productImage' : item.imageUrl,
-                                'quantity' : item.productQuantity,
-                                'orderDate' : DateTime.now(),
+                          onTap: _cartProvider.totalPrice == 0.00
+                              ? null
+                              : () async {
+                                  EasyLoading.show(status: 'Placing Order');
+                                  final orderId = Uuid().v4();
 
-                              }).whenComplete((){
-                                setState(() {
-                                  _cartProvider.getCartItems.clear();
-                                });
-                                EasyLoading.dismiss();
-                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => PaymentScreen()));
-                              });
-                            });
-                          },
+                                  List<Map<String, dynamic>> items = [];
+                                  _cartProvider.getCartItems
+                                      .forEach((key, item) {
+                                    items.add({
+                                      'vendorId': item.vendorId,
+                                      'productName': item.productName,
+                                      'productPrice': item.price,
+                                      'productId': item.productId,
+                                      'productImage': item.imageUrl,
+                                      'quantity': item.quantity,
+
+                                    });
+                                    item.productQuantity -= item.quantity;
+                                  });
+
+                                  _firestore
+                                      .collection('orders')
+                                      .doc(orderId)
+                                      .set({
+                                    'orderId': orderId,
+                                    'email': data['email'],
+                                    'phone': data['phoneNumber'],
+                                    'address': data['address'],
+                                    'buyerId': data['buyerId'],
+                                    'fullName': data['fullName'],
+                                    'userPhoto': data['profileImage'],
+                                    'items': items,
+                                    'orderDate': DateTime.now(),
+                                  }).whenComplete(() async {
+                                    setState(() {
+                                      _cartProvider.getCartItems.clear();
+                                    });
+                                    EasyLoading.dismiss();
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                PaymentScreen()));
+                                  });
+                                },
                           child: Container(
                             decoration: BoxDecoration(
-                              color: _cartProvider.totalPrice == 0.00 ? Colors.grey : Colors.blue,
+                              color: _cartProvider.totalPrice == 0.00
+                                  ? Colors.grey
+                                  : Colors.blue,
                               borderRadius: BorderRadius.circular(20),
                             ),
                             padding: EdgeInsets.symmetric(vertical: 10),
@@ -138,7 +160,9 @@ class _CheckoutCardState extends State<CheckoutCard> {
           );
         }
         return Center(
-          child: CircularProgressIndicator(color: Colors.blue.shade300,),
+          child: CircularProgressIndicator(
+            color: Colors.blue.shade300,
+          ),
         );
       },
     );

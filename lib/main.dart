@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/', // optional if your initial screen is LoginScreen
       routes: {
         '/': (context) => LoginScreen(), // optional if your initial screen is LoginScreen
-        '/generateQRScreen': (context) => GenerateQRScreen(),
+        '/generateQRScreen': (context) => QRGeneratorScreen(),
       },
       builder: EasyLoading.init(),
     );
