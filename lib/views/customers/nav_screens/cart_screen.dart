@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quicko/provider/cart_provider.dart';
+import 'package:quicko/views/customers/main_screen.dart';
 import 'package:quicko/views/customers/nav_screens/models/Cart.dart';
 
 import 'components/body.dart';
@@ -36,7 +37,7 @@ class CartScreen extends StatelessWidget {
         ],
       ),
       bottomSheet: CheckoutCard(),
-      body: ListView.builder(
+      body:_cartProvider.getCartItems.isNotEmpty? ListView.builder(
         shrinkWrap: true,
         itemCount: _cartProvider.getCartItems.length,
         itemBuilder: (context, index) {
@@ -135,6 +136,29 @@ class CartScreen extends StatelessWidget {
             ),
           );
         },
+      ):
+      Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Your cart is empty',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: () {
+                // Burada continue shopping butonuna tıklandığında yapılmasını istediğiniz işlemleri yazabilirsiniz.
+                // Örneğin:
+                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainScreen()));
+              },
+              child: Text('Continue Shopping'),
+            ),
+          ],
+        ),
       ),
     );
   }

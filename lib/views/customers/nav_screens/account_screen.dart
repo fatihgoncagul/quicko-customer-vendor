@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quicko/views/customers/auth/login_screen.dart';
+import 'package:quicko/views/inner_screens/edit_profile.dart';
 
 class AccountsScreen extends StatelessWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -67,8 +68,45 @@ class AccountsScreen extends StatelessWidget {
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                 ),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) {
+                        return EditProfileScreen(userData: data,);
+                      }),
+                    );
+                  },
+                  child: Container(
+                    height: 50,
+                    width: MediaQuery.of(context).size.width - 200,
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(width: 5),
+                        Text(
+                          'Edit Profile',
+                          style: TextStyle(
+                            color: Colors.white,
+                            letterSpacing: 2,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        Icon(
+                          Icons.edit,
+                          color: Colors.white,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
                 Padding(
-                  padding: const EdgeInsets.all(14.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: Divider(
                     thickness: 2,
                     color: Colors.grey,
@@ -87,11 +125,16 @@ class AccountsScreen extends StatelessWidget {
                   title: Text("Cart"),
                 ),
                 ListTile(
-                  onTap:()async{
+                  onTap: () async {
                     await _auth.signOut().whenComplete(() {
-                      Navigator.push(context, MaterialPageRoute(builder: (context){
-                        return LoginScreen();
-                      },),);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return LoginScreen();
+                          },
+                        ),
+                      );
                     });
                   },
                   leading: Icon(Icons.logout),

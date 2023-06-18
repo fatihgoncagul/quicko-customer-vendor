@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/auth.dart';
-
 import '../screens/landing_screen.dart';
 
 
@@ -22,7 +21,6 @@ class VendorAuthScreen extends StatelessWidget {
                 EmailProviderConfiguration(),
                 GoogleProviderConfiguration(clientId: "1:836935690091:android:586b19d467273a30ad4e2e"),
                 PhoneProviderConfiguration(),
-
               ]
           );
         }

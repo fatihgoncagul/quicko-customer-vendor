@@ -6,8 +6,10 @@ import 'package:quicko/views/customers/productDetail/product_detail_screen.dart'
 class MainProductWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final Stream<QuerySnapshot> _productsStream =
-        FirebaseFirestore.instance.collection('products').snapshots();
+    final Stream<QuerySnapshot> _productsStream = FirebaseFirestore.instance
+        .collection('products')
+        .where('approved', isEqualTo: true)
+        .snapshots();
 
     return StreamBuilder<QuerySnapshot>(
       stream: _productsStream,

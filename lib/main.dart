@@ -28,7 +28,7 @@ void main() async{
       return CartProvider();
     })
   ],
-  child: const MyApp()));
+      child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -47,8 +47,9 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/', // optional if your initial screen is LoginScreen
       routes: {
-        '/': (context) => LoginScreen(), // optional if your initial screen is LoginScreen
-        '/generateQRScreen': (context) => GenerateQRScreen(),
+        '/': (context) => MainVendorScreen(), // optional if your initial screen is LoginScreen
+        '/generateQRScreen': (context) => QRGeneratorScreen(),
+        '/homePage': (context) => MainScreen(),
       },
       builder: EasyLoading.init(),
     );

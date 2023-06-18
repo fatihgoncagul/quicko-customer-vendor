@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../main_screen.dart';
+import '../cart_screen.dart';
+
 class PaymentScreen extends StatefulWidget {
   @override
   _PaymentScreenState createState() => _PaymentScreenState();
@@ -12,6 +15,13 @@ class _PaymentScreenState extends State<PaymentScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => CartScreen()),
+          ),
+        ),
         title: Text("Payment Methods"),
         backgroundColor: Colors.amber[600],
         elevation: 0,
@@ -45,9 +55,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
               height: 30,
             ),
             paymentMethod("Visa", "assets/images/visa.png"),
-            SizedBox(
-              height: 300,
-            ),
+            SizedBox(height: 200),
             GestureDetector(
               onTap: () => Navigator.of(context).pushNamed('/generateQRScreen'),
               child: Container(

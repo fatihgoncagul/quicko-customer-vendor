@@ -1,54 +1,81 @@
 import 'package:flutter/material.dart';
-import 'package:qr_flutter/qr_flutter.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
-class GenerateQRScreen extends StatelessWidget {
-  const GenerateQRScreen({Key? key}) : super(key: key);
+class QRGeneratorScreen extends StatefulWidget {
+  @override
+  _QRGeneratorScreenState createState() => _QRGeneratorScreenState();
+}
 
-  Future<String> getQrDataFromFirestore() async {
-    var uid = FirebaseAuth.instance.currentUser!.uid;
+class _QRGeneratorScreenState extends State<QRGeneratorScreen> {
+  String qrData = "";
 
-    DocumentSnapshot docSnap = await FirebaseFirestore.instance.collection('QR').doc(uid).get();
-    Map<String, dynamic>? data = docSnap.data() as Map<String, dynamic>?;
-
-    String qrData = '';
-
-    // Belgedeki tüm alanları alıp QR verisini oluşturuyoruz.
-    if (data != null) {
-      data.forEach((key, value) {
-        qrData += value + '\n';  // Her bir QR verisini yeni bir satırda ekliyoruz.
-      });
-    }
-
-    return qrData;
+  @override
+  void initState() {
+    super.initState();
+    fetchLastOrder();
   }
 
+  fetchLastOrder() async {
+    final orders = FirebaseFirestore.instance.collection('orders');
+    final snapshot = await orders.orderBy('orderDate', descending: true).limit(1).get();
+
+    if (snapshot.docs.isNotEmpty) {
+      final order = snapshot.docs.first;
+      final fullName = order['fullName'];
+      final items = order['items'] as List;
+
+      String itemString = '';
+      for (final item in items) {
+        itemString += 'Product Name: ${item['productName']}, Product Price: ${item['productPrice']}, Quantity: ${item['quantity']}\n';
+      }
+
+      setState(() {
+        qrData = 'Full Name: $fullName\nItems:\n$itemString';
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Generate QR Code'),
+        title: Text('QR Code Generator'),
       ),
-      body: FutureBuilder<String>(
-        future: getQrDataFromFirestore(),
-        builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          }
-
-          return Center(
-            child: QrImageView(
-              data: snapshot.data!,
+      body: Center(
+        child: qrData.isEmpty
+            ? CircularProgressIndicator()
+            : Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            QrImageView(
+              data: qrData,
               version: QrVersions.auto,
-              size: 300.0,
+              size: 200.0,
             ),
-          );
-        },
+            SizedBox(height: 20.0),
+            Text(
+              'Siparişiniz oluşturulmuştur\nLütfen QR Kodunuzu Kasaya Okutun',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
       ),
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.all(8.0),
+        child: ElevatedButton(
+          onPressed: () => Navigator.of(context).pushNamed('/homePage'),
+          child: Text('Ana Sayfaya Dön'),
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.orange),
+          ),
+        ),
+      ),
+
     );
   }
 }
