@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
+import '../vendorProductDetail/vendor_product_detail_screen.dart';
+
 class PublishedTab extends StatelessWidget {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
@@ -33,38 +35,48 @@ class PublishedTab extends StatelessWidget {
               itemBuilder: ((context, index) {
                 final vendorProductData = snapshot.data!.docs[index];
                 return Slidable(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Container(
-                            height: 80,
-                            width: 80,
-                            child: Image.network(
-                                vendorProductData['imageUrlList'][0]),
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                vendorProductData['productName'],
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                              return VendorProductDetailScreen(
+                                productData: vendorProductData,
+                              );
+                            }));
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Row(
+                          children: [
+                            Container(
+                              height: 80,
+                              width: 80,
+                              child: Image.network(
+                                  vendorProductData['imageUrlList'][0]),
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  vendorProductData['productName'],
+                                  style: TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.bold),
                                 ),
-                              ),
-                              Text(
-                                '\$' +
-                                    vendorProductData['productPrice']
-                                        .toStringAsFixed(2),
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+                                Text(
+                                  '\$' +
+                                      ' ' +
+                                      vendorProductData['productPrice']
+                                          .toStringAsFixed(2),
+                                  style: TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.yellow.shade900),
+                                )
+                              ],
+                            )
+                          ],
+                        ),
                       ),
                     ),
                     // Specify a key if the Slidable is dismissible.
@@ -74,6 +86,8 @@ class PublishedTab extends StatelessWidget {
                     startActionPane: ActionPane(
                       // A motion is a widget used to control how the pane animates.
                       motion: ScrollMotion(),
+
+                      // A pane can dismiss the Slidable.
 
                       // All actions are defined in the children parameter.
                       children: [

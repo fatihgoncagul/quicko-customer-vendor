@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/', // optional if your initial screen is LoginScreen
       routes: {
-        '/': (context) => MainVendorScreen(), // optional if your initial screen is LoginScreen
+        '/': (context) => MainScreen(), // optional if your initial screen is LoginScreen
         '/generateQRScreen': (context) => QRGeneratorScreen(),
         '/homePage': (context) => MainScreen(),
       },
