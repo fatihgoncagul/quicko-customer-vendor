@@ -31,15 +31,34 @@ class _VendorOrderScreenState extends State<VendorOrderScreen> {
             return Text('Loading');
           }
 
-          return new ListView.builder(
-              itemCount: snapshot.data!.docs.length,
-              itemBuilder: (context, index) {
-                DocumentSnapshot document = snapshot.data!.docs[index];
-                Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
-                bool isPickedUp = data['isPickedUp'];
-                String statusText = isPickedUp ? 'Sipariş Teslim Edildi' : 'Sipariş Teslim Edilmedi';
-                return ListTile(
-                  title: Text('Sipariş ${index + 1} - $statusText'),
+          return ListView.builder(
+            itemCount: snapshot.data!.docs.length,
+            itemBuilder: (context, index) {
+              DocumentSnapshot document = snapshot.data!.docs[index];
+              Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+              bool isPickedUp = data['isPickedUp'];
+              String statusText = isPickedUp ? 'Ordered delivered.' : 'Order Not Delivered';
+
+              return Card(
+                elevation: 2,
+                margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: ListTile(
+                  title: Row(
+                    children: [
+                      Text('Order ${index + 1}'),
+                      SizedBox(width: 8),
+                      if (isPickedUp)
+                        Icon(
+                          Icons.check_circle,
+                          color: Colors.green,
+                        )
+                      else
+                        Icon(
+                          Icons.close,
+                          color: Colors.red,
+                        ),
+                    ],
+                  ),
                   subtitle: Text(data['fullName']),
                   onTap: () {
                     showDialog(
@@ -70,8 +89,9 @@ class _VendorOrderScreenState extends State<VendorOrderScreen> {
                       },
                     );
                   },
-                );
-              }
+                ),
+              );
+            },
           );
         },
       ),

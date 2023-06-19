@@ -97,52 +97,90 @@ class _ScanScreenState extends State<ScanScreen> {
           },
         );
       } else {
+        final fullName = orderDoc['fullName'];
+        final phone = orderDoc['phone'];
+        final items = orderDoc['items'] as List;
+
+        double totalPrice = 0.0;
+        for (final item in items) {
+          final quantity = item['quantity'];
+          final productPrice = item['productPrice'];
+          totalPrice += quantity * productPrice;
+        }
+
         showDialog(
           context: context,
           builder: (BuildContext context) {
-            final fullName = orderDoc['fullName'];
-            final phone = orderDoc['phone'];
-            final items = orderDoc['items'] as List;
-            return AlertDialog(
-              title: Text("Order Informations"),
-              content: SingleChildScrollView(
+            return Dialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              child: Container(
+                padding: EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
+                    Text(
+                      'Order Information',
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 8.0),
                     Text('Ordered Customer: $fullName'),
                     Text('Phone: $phone'),
-                    for (final item in items)
+                    SizedBox(height: 16.0),
+                    Text(
+                      'Items:',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 8.0),
+                    for (int i = 0; i < items.length; i++)
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Product Name: ${item['productName']}'),
-                          Text('Quantity: ${item['quantity']}'),
-                          Text('Product Price: ${item['productPrice']}'),
-                          SizedBox(height: 16),
+                          Text('Product ${i + 1}'),
+                          Text('Product Name: ${items[i]['productName']}'),
+                          Text('Quantity: ${items[i]['quantity']}'),
+                          Text('Product Price: ${items[i]['productPrice']}'),
+                          SizedBox(height: 16.0),
                         ],
                       ),
+                    Text(
+                      'Total Price: \$${totalPrice.toStringAsFixed(2)}',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16.0,
+                      ),
+                    ),
+                    SizedBox(height: 16.0),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                        child: Text('OK'),
+                        onPressed: () async {
+                          Navigator.of(context).pop();
+                          setState(() {
+                            result = scanData;
+                          });
+
+                          // Set 'isPickedUp' value to true
+                          await FirebaseFirestore.instance
+                              .collection('orders')
+                              .doc(orderId)
+                              .update({'isPickedUp': true});
+
+                          controller.resumeCamera();
+                        },
+                      ),
+                    ),
                   ],
                 ),
               ),
-              actions: [
-                TextButton(
-                  child: Text('Tamam'),
-                  onPressed: () async {
-                    Navigator.of(context).pop();
-                    setState(() {
-                      result = scanData;
-                    });
-
-                    // Set 'isPickedUp' value to true
-                    await FirebaseFirestore.instance
-                        .collection('orders')
-                        .doc(orderId)
-                        .update({'isPickedUp': true});
-
-                    controller.resumeCamera();
-                  },
-                ),
-              ],
             );
           },
         );
