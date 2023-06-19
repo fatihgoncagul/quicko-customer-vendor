@@ -29,33 +29,36 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
 
   Uint8List? _image;
 
-  _singUpUsers()async{
+  _singUpUsers() async {
     setState(() {
-      _isLoading =true;
+      _isLoading = true;
     });
-    if(_formKey.currentState!.validate()){
-      await _authController.signUpUsers(email, fullName, phoneNumber, password,_image).whenComplete(() {
+    if (_formKey.currentState!.validate()) {
+      await _authController
+          .signUpUsers(email, fullName, phoneNumber, password, _image)
+          .whenComplete(() {
         setState(() {
           _formKey.currentState!.reset();
           _isLoading = false;
         });
       });
       return showSnack(context, 'Account created succesfully');
-    }else{
+    } else {
       setState(() {
-        _isLoading=false;
+        _isLoading = false;
       });
       return showSnack(context, 'Please Fields must be not empty!');
     }
   }
 
-  selectGalleryImage()async{
+  selectGalleryImage() async {
     Uint8List im = await _authController.pickProfileImage(ImageSource.gallery);
     setState(() {
       _image = im;
     });
   }
-  selectCameraImage()async{
+
+  selectCameraImage() async {
     Uint8List im = await _authController.pickProfileImage(ImageSource.camera);
     setState(() {
       _image = im;
@@ -64,13 +67,17 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.blue.shade700,
+            size: 48,
+          ),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text('Customer Registration'),
+        title: null,
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -79,148 +86,201 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Create Customer',
-                  style:TextStyle(
-                    fontSize: 20,
+                Text(
+                  'Create Customer',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 Stack(
                   children: [
-                    _image!=null ? CircleAvatar(
-                      radius: 64,
-                      backgroundColor: Colors.yellow.shade900,
-                      backgroundImage: MemoryImage(_image!),
-                    ):CircleAvatar(
-                      radius: 64,
-                      backgroundColor: Colors.yellow.shade900,
-                      backgroundImage: NetworkImage('https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg'),
-                    ),
+                    _image != null
+                        ? CircleAvatar(
+                            radius: 64,
+                            backgroundColor: Colors.blue,
+                            backgroundImage: MemoryImage(_image!),
+                          )
+                        : CircleAvatar(
+                            radius: 64,
+                            backgroundColor: Colors.blue,
+                            backgroundImage: NetworkImage(
+                                'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg'),
+                          ),
                     Positioned(
-                      right: 0,
+                      right: -8,
                       top: 5,
                       child: IconButton(
-                        onPressed: (){
+                        onPressed: () {
                           selectGalleryImage();
                         },
-                        icon: Icon(CupertinoIcons.photo,color: Colors.white,),
+                        icon: Icon(
+                          CupertinoIcons.photo,
+                          color: Colors.black,
+                        ),
                       ),
                     ),
                   ],
                 ),
+                SizedBox(
+                  height: 10,
+                ),
                 Padding(
-                  padding: const EdgeInsets.all(14.0),
-                  child: TextFormField(
-                    validator: (value){
-                      if(value!.isEmpty){
-                        return 'Please Enter Your Email';
-                      }
-                      else{
-                        return null;
-                      }
-                    },
-                    onChanged: (value){
-                      email = value;
-                    },
-                    decoration: InputDecoration(
-                      labelText: 'Enter E-mail',
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.circular(16.0),
+                    ),
+                    child: TextFormField(
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please Enter Your Email';
+                        } else {
+                          return null;
+                        }
+                      },
+                      onChanged: (value) {
+                        email = value;
+                      },
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.all(8),
+                        labelStyle: TextStyle(
+                          letterSpacing: 2,
+                        ),
+                        labelText: 'Enter E-mail',
+                      ),
                     ),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(14.0),
-                  child: TextFormField(
-                    validator: (value){
-                      if(value!.isEmpty){
-                        return 'Please Enter Full Name';
-                      }
-                      else{
-                        return null;
-                      }
-                    },
-                    onChanged: (value){
-                      fullName = value;
-                    },
-                    decoration: InputDecoration(
-                      labelText: 'Enter Full Name',
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.circular(16.0),
+                    ),
+                    child: TextFormField(
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please Enter Full Name';
+                        } else {
+                          return null;
+                        }
+                      },
+                      onChanged: (value) {
+                        fullName = value;
+                      },
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.all(8),
+                        labelStyle: TextStyle(
+                          letterSpacing: 2,
+                        ),
+                        labelText: 'Enter Full Name',
+                      ),
                     ),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(14.0),
-                  child: TextFormField(
-                    validator: (value){
-                      if(value!.isEmpty){
-                        return 'Please Enter Phone Number';
-                      }
-                      else{
-                        return null;
-                      }
-                    },
-                    onChanged: (value){
-                      phoneNumber = value;
-                    },
-                    decoration: InputDecoration(
-                      labelText: 'Enter Phone',
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.circular(16.0),
+                    ),
+                    child: TextFormField(
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please Enter Phone Number';
+                        } else {
+                          return null;
+                        }
+                      },
+                      onChanged: (value) {
+                        phoneNumber = value;
+                      },
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.all(8),
+                        labelStyle: TextStyle(
+                          letterSpacing: 2,
+                        ),
+                        labelText: 'Enter Phone',
+                      ),
                     ),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(14.0),
-                  child: TextFormField(
-                    obscureText: true,
-                    validator: (value){
-                      if(value!.isEmpty){
-                        return 'Please Enter Password';
-                      }
-                      else{
-                        return null;
-                      }
-                    },
-                    onChanged: (value){
-                      password = value;
-                    },
-                    decoration: InputDecoration(
-                      labelText: 'Enter Password',
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.circular(16.0),
+                    ),
+                    child: TextFormField(
+                      obscureText: true,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please Enter Password';
+                        } else {
+                          return null;
+                        }
+                      },
+                      onChanged: (value) {
+                        password = value;
+                      },
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.all(8),
+                        labelStyle: TextStyle(
+                          letterSpacing: 2,
+                        ),
+                        labelText: 'Enter Password',
+                      ),
                     ),
                   ),
+                ),
+                SizedBox(
+                  height: 2,
                 ),
                 GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     _singUpUsers();
                   },
                   child: Container(
-                    width: MediaQuery.of(context).size.width-40,
+                    width: MediaQuery.of(context).size.width - 40,
                     height: 50,
                     decoration: BoxDecoration(
-                      color: Colors.yellow.shade100,
+                      color: Colors.blue,
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Center(
-                      child:_isLoading ? CircularProgressIndicator(
-                        color: Colors.white,
-                      ): Text('Sing Up',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 4,
-                        ),
-                      ),
+                      child: _isLoading
+                          ? CircularProgressIndicator(
+                              color: Colors.white,
+                            )
+                          : Text(
+                              'Sign Up',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 4,
+                              ),
+                            ),
                     ),
                   ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('Already Have an Account'),
+                    Text('Already Have an Account',style: TextStyle(fontSize: 16),),
                     TextButton(
-                      onPressed: (){
+                      onPressed: () {
                         Navigator.push(context,
-                            MaterialPageRoute(builder: (context){
-                              return LoginScreen();
-                            }));
+                            MaterialPageRoute(builder: (context) {
+                          return LoginScreen();
+                        }));
                       },
-                      child: Text('Login'),
+                      child: Text('Login',style: TextStyle(fontSize: 18),),
                     ),
                   ],
                 ),

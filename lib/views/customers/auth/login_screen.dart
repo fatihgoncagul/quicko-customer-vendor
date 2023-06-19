@@ -23,8 +23,8 @@ class _LoginScreenState extends State<LoginScreen> {
       if (res == 'success') {
         return Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (BuildContext context) {
-              return MainScreen();
-            }));
+          return MainScreen();
+        }));
       } else {
         return showSnack(context, res);
       }
@@ -38,12 +38,15 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: BackButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.blue.shade700,
+            size: 48,
+          ),
+          onPressed: () => Navigator.pop(context),
         ),
-        title: Text('Login Customers'),
+        title: null,
       ),
       body: Center(
         child: Form(
@@ -51,40 +54,63 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Text(
+                'Customer Login',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.all(14.0),
-                child: TextFormField(
-                  validator: ((value) {
-                    if (value!.isEmpty) {
-                      return 'Please Email field must be not empty';
-                    } else {
-                      return null;
-                    }
-                  }),
-                  onChanged: ((value) {
-                    email = value;
-                  }),
-                  decoration: InputDecoration(
-                    labelText: 'Email',
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black),
+                    borderRadius: BorderRadius.circular(16.0),
+                  ),
+                  child: TextFormField(
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter a valid email';
+                      } else {
+                        return null;
+                      }
+                    },
+                    onChanged: (value) {
+                      email = value;
+                    },
+                    decoration: InputDecoration(
+                      labelText: 'Email',
+                      border: InputBorder.none,
+                      contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                    ),
                   ),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(14.0),
-                child: TextFormField(
-                  obscureText: true,
-                  validator: ((value) {
-                    if (value!.isEmpty) {
-                      return 'Please Password field must be not empty';
-                    } else {
-                      return null;
-                    }
-                  }),
-                  onChanged: ((value) {
-                    password = value;
-                  }),
-                  decoration: InputDecoration(
-                    labelText: 'Password',
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black),
+                    borderRadius: BorderRadius.circular(16.0),
+                  ),
+                  child: TextFormField(
+                    obscureText: true,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter a valid password';
+                      } else {
+                        return null;
+                      }
+                    },
+                    onChanged: (value) {
+                      password = value;
+                    },
+                    decoration: InputDecoration(
+                      labelText: 'Password',
+                      border: InputBorder.none,
+                      contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                    ),
                   ),
                 ),
               ),
@@ -99,38 +125,44 @@ class _LoginScreenState extends State<LoginScreen> {
                   width: MediaQuery.of(context).size.width - 40,
                   height: 50,
                   decoration: BoxDecoration(
-                    color: Colors.yellow.shade100,
+                    color: Colors.blue,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Center(
                     child: _isLoading
                         ? CircularProgressIndicator(
-                      color: Colors.white,
-                    )
+                            color: Colors.white,
+                          )
                         : Text(
-                      'Sign Up',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 4,
-                      ),
-                    ),
+                            'Sign Up',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 4,
+                            ),
+                          ),
                   ),
                 ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Need an account'),
+                  Text(
+                    'Need an account?',
+                    style: TextStyle(fontSize: 16),
+                  ),
                   TextButton(
                     onPressed: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                            return CustomerRegisterScreen();
-                          }));
+                        return CustomerRegisterScreen();
+                      }));
                     },
-                    child: Text('Register'),
+                    child: Text(
+                      'Register',
+                      style: TextStyle(fontSize: 18),
+                    ),
                   ),
                 ],
               ),

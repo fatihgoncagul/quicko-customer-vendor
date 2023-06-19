@@ -2,10 +2,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutterfire_ui/auth.dart';
 import 'package:provider/provider.dart';
+import 'package:quicko/onboarding_screen.dart';
 import 'package:quicko/provider/cart_provider.dart';
 import 'package:quicko/provider/product_provider.dart';
+import 'package:quicko/splash_screen.dart';
 import 'package:quicko/vendor/views/auth/vendor_auth.dart';
 import 'package:quicko/vendor/views/screens/landing_screen.dart';
 import 'package:quicko/vendor/views/screens/main_vendor_screen.dart';
@@ -13,10 +14,10 @@ import 'package:quicko/vendor/views/screens/vendor_logout_screen.dart';
 import 'package:quicko/views/customers/auth/register_screen.dart';
 import 'package:quicko/views/customers/main_screen.dart';
 import 'package:quicko/views/customers/nav_screens/payment/generateQR_screen.dart';
+import 'package:quicko/views/customers/nav_screens/store_screen.dart';
+import 'package:quicko/views/customers/productDetail/store_detail.dart';
 
 import 'views/customers/auth/login_screen.dart';
-
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,29 +35,107 @@ void main() async {
   ));
 }
 
-class MainScreen extends StatelessWidget {
+class InitialScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Main Screen'),
+        flexibleSpace: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Text(
+              'Quicko',
+              style: TextStyle(
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 2,
+              ),
+            ),
+          ],
+        ),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            ElevatedButton(
-              child: Text('Customer'),
-              onPressed: () {
-                Navigator.pushNamed(context, '/login_screen');
-              },
+            Padding(
+              padding: EdgeInsets.only(top: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Image.asset(
+                    'assets/images/logo.png',
+                    width: 100,
+                    height: 100,
+                  ),
+                ],
+              ),
             ),
-            SizedBox(height: 20), //give some space between two buttons
-            ElevatedButton(
-              child: Text('Vendor'),
-              onPressed: () {
-                Navigator.pushNamed(context, '/vendor_auth');
-              },
+            SizedBox(
+              height: 20,
+            ),
+            Text(
+              'With Quicko Save Your Time',
+              style: TextStyle(
+                fontSize: 16,
+                letterSpacing: 2,
+              ),
+            ),
+            SizedBox(height: 80),
+            Container(
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    blurRadius: 24,
+                    offset: Offset(0,
+                        5), // Gölgeyi yatay ve dikey olarak ayarlayabilirsiniz
+                  ),
+                ],
+              ),
+              child: ElevatedButton(
+                child: Text(
+                  'Customer Login',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.blue,
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (BuildContext context) {
+                    return LoginScreen();
+                  }));
+                },
+              ),
+            ),
+            SizedBox(height: 20),
+            Container(
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    blurRadius: 24,
+                    offset: Offset(0,
+                        5), // Gölgeyi yatay ve dikey olarak ayarlayabilirsiniz
+                  ),
+                ],
+              ),
+              child: ElevatedButton(
+                child: Text(
+                  'Vendor Login',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.blue,
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (BuildContext context) {
+                    return VendorAuthScreen();
+                  }));
+                },
+              ),
             ),
           ],
         ),
@@ -80,13 +159,11 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Poppins-Bold',
         useMaterial3: true,
       ),
-      initialRoute: '/',
+      home: SplashScreen(),
       routes: {
-        '/': (context) => MainScreen(),
         '/generateQRScreen': (context) => QRGeneratorScreen(),
         '/login_screen': (context) => LoginScreen(), // Customer's login screen
         '/vendor_auth': (context) => VendorAuthScreen(),
-
       },
       builder: EasyLoading.init(),
     );

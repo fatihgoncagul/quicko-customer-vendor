@@ -128,7 +128,7 @@ class AccountsScreen extends StatelessWidget {
                 ListTile(
                   onTap: () async {
                     await _auth.signOut().whenComplete(() {
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                           builder: (context) {

@@ -151,8 +151,6 @@ class CartScreen extends StatelessWidget {
             SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
-                // Burada continue shopping butonuna tıklandığında yapılmasını istediğiniz işlemleri yazabilirsiniz.
-                // Örneğin:
                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainScreen()));
               },
               child: Text('Continue Shopping'),
