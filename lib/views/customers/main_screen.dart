@@ -19,6 +19,7 @@ class _MainScreenState extends State<MainScreen> {
   List<Widget> _pages =[
     HomeScreen(),
     StoreScreen(),
+    SearchScreen(),
     CartScreen(),
     AccountsScreen(),
   ];
@@ -47,6 +48,12 @@ class _MainScreenState extends State<MainScreen> {
                 width: 20,
               ),
               label: 'STORE'),
+          BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                'assets/icons/search.svg',
+                width: 20,
+              ),
+              label: 'SEARCH'),
           BottomNavigationBarItem(
               icon: SvgPicture.asset(
                 'assets/icons/cart.svg',
