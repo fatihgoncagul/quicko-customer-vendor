@@ -26,6 +26,7 @@ class VendorAuthScreen extends StatelessWidget {
             ),
             body: SignInScreen(
               providerConfigs: [
+
                 EmailProviderConfiguration(),
                 GoogleProviderConfiguration(
                   clientId: "1:836935690091:android:586b19d467273a30ad4e2e",
