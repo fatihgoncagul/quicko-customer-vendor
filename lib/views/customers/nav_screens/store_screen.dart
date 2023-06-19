@@ -44,7 +44,7 @@ class StoreScreen extends StatelessWidget {
                   },
                   child: ListTile(
                     title: Text(storeData['businessName']),
-                    subtitle: Text(storeData['countryValue']),
+                    subtitle: Text(storeData['cityValue']),
                     leading: CircleAvatar(
                       backgroundImage: NetworkImage(storeData['storeImage']),
                     ),

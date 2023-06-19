@@ -10,25 +10,59 @@ import 'package:quicko/vendor/views/auth/vendor_auth.dart';
 import 'package:quicko/vendor/views/screens/landing_screen.dart';
 import 'package:quicko/vendor/views/screens/main_vendor_screen.dart';
 import 'package:quicko/vendor/views/screens/vendor_logout_screen.dart';
+import 'package:quicko/views/customers/auth/register_screen.dart';
 import 'package:quicko/views/customers/main_screen.dart';
 import 'package:quicko/views/customers/nav_screens/payment/generateQR_screen.dart';
 
-import 'vendor/views/auth/vendor_registor.dart';
 import 'views/customers/auth/login_screen.dart';
 
 
-void main() async{
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(create: (_){
-      return ProductProvider();
-    }),
-    ChangeNotifierProvider(create: (_){
-      return CartProvider();
-    })
-  ],
-      child: const MyApp()));
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (_) {
+        return ProductProvider();
+      }),
+      ChangeNotifierProvider(create: (_) {
+        return CartProvider();
+      })
+    ],
+    child: const MyApp(),
+  ));
+}
+
+class MainScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Main Screen'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            ElevatedButton(
+              child: Text('Customer'),
+              onPressed: () {
+                Navigator.pushNamed(context, '/login_screen');
+              },
+            ),
+            SizedBox(height: 20), //give some space between two buttons
+            ElevatedButton(
+              child: Text('Vendor'),
+              onPressed: () {
+                Navigator.pushNamed(context, '/vendor_auth');
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -36,7 +70,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+    SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
@@ -45,11 +80,13 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Poppins-Bold',
         useMaterial3: true,
       ),
-      initialRoute: '/', // optional if your initial screen is LoginScreen
+      initialRoute: '/',
       routes: {
-        '/': (context) => MainScreen(), // optional if your initial screen is LoginScreen
+        '/': (context) => MainScreen(),
         '/generateQRScreen': (context) => QRGeneratorScreen(),
-        '/homePage': (context) => MainScreen(),
+        '/login_screen': (context) => LoginScreen(), // Customer's login screen
+        '/vendor_auth': (context) => VendorAuthScreen(),
+
       },
       builder: EasyLoading.init(),
     );

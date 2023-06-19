@@ -25,7 +25,24 @@ class PublishedTab extends StatelessWidget {
           }
 
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Text("Loading");
+            return Center(
+              child: CircularProgressIndicator(
+                color: Colors.blue,
+              ),
+            );
+          }
+
+          if (snapshot.data!.docs.isEmpty) {
+            return Center(
+              child: Text(
+                'No Publish Product Yet',
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            );
           }
 
           return Container(
@@ -39,10 +56,10 @@ class PublishedTab extends StatelessWidget {
                       onTap: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                              return VendorProductDetailScreen(
-                                productData: vendorProductData,
-                              );
-                            }));
+                          return VendorProductDetailScreen(
+                            productData: vendorProductData,
+                          );
+                        }));
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),

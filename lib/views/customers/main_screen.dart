@@ -18,7 +18,6 @@ class _MainScreenState extends State<MainScreen> {
   int _pageIndex =0;
   List<Widget> _pages =[
     HomeScreen(),
-    SearchScreen(),
     StoreScreen(),
     CartScreen(),
     AccountsScreen(),
@@ -41,12 +40,7 @@ class _MainScreenState extends State<MainScreen> {
           BottomNavigationBarItem(
               icon: Icon(CupertinoIcons.home),
               label: 'HOME'),
-          BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                'assets/icons/explore.svg',
-                width: 20,
-              ),
-              label: 'SEARCH'),
+
           BottomNavigationBarItem(
               icon: SvgPicture.asset(
                 'assets/icons/shop.svg',

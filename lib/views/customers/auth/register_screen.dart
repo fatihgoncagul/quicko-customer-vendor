@@ -65,6 +65,13 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: Text('Customer Registration'),
+      ),
       body: Center(
         child: SingleChildScrollView(
           child: Form(

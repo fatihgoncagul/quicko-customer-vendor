@@ -1,10 +1,30 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class SearchInputWidget extends StatelessWidget {
+class SearchInputWidget extends StatefulWidget {
   const SearchInputWidget({
     super.key,
   });
+
+  @override
+  State<SearchInputWidget> createState() => _SearchInputWidgetState();
+}
+
+class _SearchInputWidgetState extends State<SearchInputWidget> {
+  Future<QuerySnapshot>? searchDocumentList;
+  String productNameText = '';
+
+  initSearching(String textEntered) {
+    searchDocumentList = FirebaseFirestore.instance
+        .collection('products')
+        .where('productName', isGreaterThanOrEqualTo: textEntered)
+        .get();
+
+    setState(() {
+      searchDocumentList;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,6 +33,12 @@ class SearchInputWidget extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),
         child: TextField(
+          onChanged: (textEntered) {
+            setState(() {
+              productNameText = textEntered;
+            });
+            initSearching(textEntered);
+          },
           decoration: InputDecoration(
             fillColor: Colors.white,
             filled: true,
@@ -20,12 +46,14 @@ class SearchInputWidget extends StatelessWidget {
             border: OutlineInputBorder(
               borderSide: BorderSide.none,
             ),
-            prefixIcon: Padding(
-              padding: const EdgeInsets.all(14.0),
-              child: SvgPicture.asset(
-                'assets/icons/search.svg',
-                width: 10,
+            suffixIcon: IconButton(
+              icon: const Icon(
+                Icons.search,
+                color: Colors.black,
               ),
+              onPressed: () {
+                initSearching(productNameText);
+              },
             ),
           ),
         ),
