@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quicko/main.dart';
+import 'package:quicko/onboarding_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -18,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   _navigateToInitial()async{
     await Future.delayed(Duration(milliseconds: 2000),(){});
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => InitialScreen(),));
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OnboardingScreen(),));
   }
 
   @override

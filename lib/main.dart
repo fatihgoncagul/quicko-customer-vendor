@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
+import 'package:quicko/onboarding_screen.dart';
 import 'package:quicko/provider/cart_provider.dart';
 import 'package:quicko/provider/product_provider.dart';
 import 'package:quicko/splash_screen.dart';
@@ -13,6 +14,8 @@ import 'package:quicko/vendor/views/screens/vendor_logout_screen.dart';
 import 'package:quicko/views/customers/auth/register_screen.dart';
 import 'package:quicko/views/customers/main_screen.dart';
 import 'package:quicko/views/customers/nav_screens/payment/generateQR_screen.dart';
+import 'package:quicko/views/customers/nav_screens/store_screen.dart';
+import 'package:quicko/views/customers/productDetail/store_detail.dart';
 
 import 'views/customers/auth/login_screen.dart';
 

@@ -141,28 +141,42 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       bottomSheet: Padding(
         padding: const EdgeInsets.all(10.0),
         child: InkWell(
-          onTap: _cartProvider.getCartItems
-                  .containsKey(widget.productData['productId'])
-              ? null
-              : () {
-                  _cartProvider.addProductToCart(
-                      widget.productData['productName'],
-                      widget.productData['productId'],
-                      widget.productData['imageUrlList'],
-                      1,
-                      widget.productData['productQuantity'],
-                      widget.productData['productPrice'],
-                      widget.productData['vendorId']);
-                  
-                  return showSnack(context, 'You Added ${widget.productData['productName']} To Your Cart');
-                },
+          onTap: () {
+            if (_cartProvider.isVendorIdSame(widget.productData['vendorId'])) {
+              _cartProvider.addProductToCart(
+                  widget.productData['productName'],
+                  widget.productData['productId'],
+                  widget.productData['imageUrlList'],
+                  1,
+                  widget.productData['productQuantity'],
+                  widget.productData['productPrice'],
+                  widget.productData['vendorId']
+              );
+            } else {
+              showDialog(
+                context: context,
+                builder: (ctx) => AlertDialog(
+                  title: Text('Hata'),
+                  content: Text('Aynı anda farklı mağazalardan alışveriş yapamazsınız.'),
+                  actions: <Widget>[
+                    TextButton(
+                      child: Text('Tamam'),
+                      onPressed: () {
+                        Navigator.of(ctx).pop();
+                      },
+                    ),
+                  ],
+                ),
+              );
+            }
+          },
           child: Container(
             height: 50,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: _cartProvider.getCartItems
-                      .containsKey(widget.productData['productId'])
+                  .containsKey(widget.productData['productId'])
                   ? Colors.grey
                   : Colors.blue,
             ),
@@ -180,23 +194,23 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: _cartProvider.getCartItems
-                          .containsKey(widget.productData['productId'])
+                      .containsKey(widget.productData['productId'])
                       ? Text(
-                          'In Cart',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                          ),
-                        )
+                    'In Cart',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  )
                       : Text(
-                          'Add to Cart',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                          ),
-                        ),
+                    'Add to Cart',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
                 ),
               ],
             ),

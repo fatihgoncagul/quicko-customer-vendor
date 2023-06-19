@@ -21,6 +21,7 @@ class CheckoutCard extends StatefulWidget {
 }
 
 class _CheckoutCardState extends State<CheckoutCard> {
+  bool isPickedUp = false;
   @override
   Widget build(BuildContext context) {
     final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -96,6 +97,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
                             _cartProvider.getCartItems
                                 .forEach((key, item) {
                               items.add({
+
                                 'vendorId': item.vendorId,
                                 'productName': item.productName,
                                 'productPrice': item.price,
@@ -111,6 +113,8 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                 .collection('orders')
                                 .doc(orderId)
                                 .set({
+                              "vendorId": items[0]["vendorId"],
+                              "isPickedUp":isPickedUp,
                               'orderId': orderId,
                               'email': data['email'],
                               'phone': data['phoneNumber'],

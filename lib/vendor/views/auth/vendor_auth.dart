@@ -8,19 +8,32 @@ class VendorAuthScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<User?>(
-      stream: FirebaseAuth.instance.authStateChanges(),
-      initialData: FirebaseAuth.instance.currentUser,
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) {
-          return SignInScreen(
-            providers: [
-              EmailAuthProvider(),
-            ],
-          );
-        }
-        return LandingScreen();
-      },
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+            size: 32,
+          ),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: null,
+      ),
+      body: StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        initialData: FirebaseAuth.instance.currentUser,
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return SignInScreen(
+              providers: [
+                EmailAuthProvider(),
+              ],
+            );
+          }
+          return LandingScreen();
+        },
+      ),
     );
   }
 }

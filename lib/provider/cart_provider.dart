@@ -21,28 +21,26 @@ class CartProvider with ChangeNotifier {
     if (_cartItems.containsKey(productId)) {
       _cartItems.update(
           productId,
-              (existingCart) =>
-              CartAttributes(
-                  productName: existingCart.productName,
-                  productId: existingCart.productId,
-                  imageUrl: existingCart.imageUrl,
-                  quantity: existingCart.quantity + 1,
-                  productQuantity: existingCart.productQuantity,
-                  price: existingCart.price,
-                  vendorId: existingCart.vendorId));
+              (existingCart) => CartAttributes(
+              productName: existingCart.productName,
+              productId: existingCart.productId,
+              imageUrl: existingCart.imageUrl,
+              quantity: existingCart.quantity + 1,
+              productQuantity: existingCart.productQuantity,
+              price: existingCart.price,
+              vendorId: existingCart.vendorId));
       notifyListeners();
     } else {
       _cartItems.putIfAbsent(
           productId,
-              () =>
-              CartAttributes(
-                  productName: productName,
-                  productId: productId,
-                  imageUrl: imageUrl,
-                  quantity: quantity,
-                  productQuantity: productQuantity,
-                  price: price,
-                  vendorId: vendorId));
+              () => CartAttributes(
+              productName: productName,
+              productId: productId,
+              imageUrl: imageUrl,
+              quantity: quantity,
+              productQuantity: productQuantity,
+              price: price,
+              vendorId: vendorId));
       notifyListeners();
     }
   }
@@ -57,12 +55,27 @@ class CartProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  removeItem(productId){
+  void removeItem(productId) {
     _cartItems.remove(productId);
     notifyListeners();
   }
-  removeAllItem(){
+
+  void removeAllItem() {
     _cartItems.clear();
     notifyListeners();
+  }
+
+  bool isVendorIdSame(String newVendorId) {
+    if (_cartItems.isEmpty) {
+      return true;
+    } else {
+      final existingVendorId = _cartItems.values.first.vendorId;
+      for (var item in _cartItems.values) {
+        if (item.vendorId != existingVendorId || newVendorId != existingVendorId) {
+          return false;
+        }
+      }
+      return true;
+    }
   }
 }

@@ -22,17 +22,11 @@ class _QRGeneratorScreenState extends State<QRGeneratorScreen> {
 
     if (snapshot.docs.isNotEmpty) {
       final order = snapshot.docs.first;
-      final fullName = order['fullName'];
-      final items = order['items'] as List;
-
-      String itemString = '';
-      for (final item in items) {
-        itemString += 'Product Name: ${item['productName']}, Product Price: ${item['productPrice']}, Quantity: ${item['quantity']}\n';
-      }
 
       setState(() {
-        qrData = 'Full Name: $fullName\nItems:\n$itemString';
+        qrData = order["orderId"];
       });
+
     }
   }
 

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:quicko/views/customers/nav_screens/search_screen.dart';
 
 class SearchInputWidget extends StatefulWidget {
   const SearchInputWidget({
@@ -33,11 +34,11 @@ class _SearchInputWidgetState extends State<SearchInputWidget> {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),
         child: TextField(
-          onChanged: (textEntered) {
-            setState(() {
-              productNameText = textEntered;
-            });
-            initSearching(textEntered);
+          enabled: true,
+          onTap: () {
+             Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
+              return SearchScreen();
+            }));
           },
           decoration: InputDecoration(
             fillColor: Colors.white,
@@ -51,9 +52,9 @@ class _SearchInputWidgetState extends State<SearchInputWidget> {
                 Icons.search,
                 color: Colors.black,
               ),
-              onPressed: () {
-                initSearching(productNameText);
-              },
+              onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
+                return SearchScreen();
+              }))
             ),
           ),
         ),
