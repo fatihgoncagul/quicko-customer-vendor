@@ -21,7 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (_formKey.currentState!.validate()) {
       String res = await _authController.loginUsers(email, password);
       if (res == 'success') {
-        return Navigator.pushReplacement(context,
+        return Navigator.push(context,
             MaterialPageRoute(builder: (BuildContext context) {
           return MainScreen();
         }));

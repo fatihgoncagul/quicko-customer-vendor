@@ -30,10 +30,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         title: Text(
           widget.productData['productName'],
           style: TextStyle(
-            color: Colors.black,
+            color: Colors.white,
             fontSize: 18,
             fontWeight: FontWeight.bold,
-            letterSpacing: 4,
+            letterSpacing: 2,
           ),
         ),
       ),
@@ -114,11 +114,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 children: [
                   Text(
                     'Product Description',
-                    style: TextStyle(color: Colors.yellow.shade900),
+                    style: TextStyle(color: Colors.blue),
                   ),
                   Text(
                     'View More',
-                    style: TextStyle(color: Colors.yellow.shade900),
+                    style: TextStyle(color: Colors.blue),
                   ),
                 ],
               ),

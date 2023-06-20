@@ -33,7 +33,7 @@ class AccountsScreen extends StatelessWidget {
               backgroundColor: Colors.blue.shade900,
               title: Text(
                 'Profile',
-                style: TextStyle(letterSpacing: 4),
+                style: TextStyle(letterSpacing: 4,color: Colors.white),
               ),
               centerTitle: true,
               actions: [
@@ -52,7 +52,7 @@ class AccountsScreen extends StatelessWidget {
                   child: CircleAvatar(
                     radius: 64,
                     backgroundColor: Colors.blue.shade900,
-                    //backgroundImage: NetworkImage(data['profileImage']),
+                    backgroundImage: NetworkImage(data['profileImage']),
                   ),
                 ),
                 Padding(
@@ -119,7 +119,7 @@ class AccountsScreen extends StatelessWidget {
                 ),
                 ListTile(
                   leading: Icon(Icons.phone),
-                  title: Text("Phone"),
+                  title: Text(data['phoneNumber'] ?? "Phone"),
                 ),
                 ListTile(
                   leading: Icon(Icons.shop),

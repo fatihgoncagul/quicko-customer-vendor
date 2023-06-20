@@ -37,7 +37,7 @@ class _VendorOrderScreenState extends State<VendorOrderScreen> {
               DocumentSnapshot document = snapshot.data!.docs[index];
               Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
               bool isPickedUp = data['isPickedUp'];
-              String statusText = isPickedUp ? 'Ordered delivered.' : 'Order Not Delivered';
+              String statusText = isPickedUp ? 'order delivered.' : 'order not delivered';
 
               return Card(
                 elevation: 2,
@@ -59,29 +59,67 @@ class _VendorOrderScreenState extends State<VendorOrderScreen> {
                         ),
                     ],
                   ),
-                  subtitle: Text(data['fullName']),
+                  subtitle: Text("${data['fullName']}'s ${statusText} " ),
                   onTap: () {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text('Order Informations'),
-                          content: SingleChildScrollView(
+                        return Dialog(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          child: Container(
+                            padding: EdgeInsets.all(16.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
                               children: [
+                                Text(
+                                  'Order Information',
+                                  style: TextStyle(
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(height: 8.0),
                                 Text('Ordered Customer: ${data['fullName']}'),
                                 Text('Phone: ${data['phone']}'),
-                                for (final item in data['items'])
+                                SizedBox(height: 16.0),
+                                Text(
+                                  'Items:',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(height: 8.0),
+                                for (int i = 0; i < data['items'].length; i++)
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text('Product Name: ${item['productName']}'),
-                                      Text('Quantity: ${item['quantity']}'),
-                                      Text('Product Price: ${item['productPrice']}'),
-                                      SizedBox(height: 16),
+                                      Text('Product ${i + 1}'),
+                                      Text('Product Name: ${data['items'][i]['productName']}'),
+                                      Text('Quantity: ${data['items'][i]['quantity']}'),
+                                      Text('Product Price: ${data['items'][i]['productPrice']}'),
+                                      SizedBox(height: 16.0),
                                     ],
                                   ),
+                                Text(
+                                  'Total Price: \$${data['totalPrice'].toStringAsFixed(2)}',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16.0,
+                                  ),
+                                ),
+                                SizedBox(height: 16.0),
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: TextButton(
+                                    child: Text('OK'),
+                                    onPressed: () async {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ),
                               ],
                             ),
                           ),

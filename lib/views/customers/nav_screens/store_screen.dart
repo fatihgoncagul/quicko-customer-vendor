@@ -3,33 +3,42 @@ import 'package:flutter/material.dart';
 
 import '../productDetail/store_detail.dart';
 
-
 class StoreScreen extends StatelessWidget {
-  const StoreScreen({super.key});
+  const StoreScreen({Key? key});
 
   @override
   Widget build(BuildContext context) {
     final Stream<QuerySnapshot> _vendorsStream =
-    FirebaseFirestore.instance.collection('vendors').snapshots();
+        FirebaseFirestore.instance.collection('vendors').snapshots();
 
-    return StreamBuilder<QuerySnapshot>(
-      stream: _vendorsStream,
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (snapshot.hasError) {
-          return Text('Something went wrong');
-        }
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Stores',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Colors.blue.shade900,
+      ),
+      body: StreamBuilder<QuerySnapshot>(
+        stream: _vendorsStream,
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return Text('Something went wrong');
+          }
 
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(
-            child: CircularProgressIndicator(
-              color: Colors.yellow.shade900,
-            ),
-          );
-        }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(
+                color: Colors.yellow.shade900,
+              ),
+            );
+          }
 
-        return Container(
-          height: 500,
-          child: ListView.builder(
+          return Container(
+            height: 500,
+            child: ListView.builder(
               itemCount: snapshot.data!.size,
               itemBuilder: (context, index) {
                 final storeData = snapshot.data!.docs[index];
@@ -37,10 +46,10 @@ class StoreScreen extends StatelessWidget {
                   onTap: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
-                          return StoreDetailScreen(
-                            storeData: storeData,
-                          );
-                        }));
+                      return StoreDetailScreen(
+                        storeData: storeData,
+                      );
+                    }));
                   },
                   child: ListTile(
                     title: Text(storeData['businessName']),
@@ -50,9 +59,11 @@ class StoreScreen extends StatelessWidget {
                     ),
                   ),
                 );
-              }),
-        );
-      },
+              },
+            ),
+          );
+        },
+      ),
     );
   }
 }

@@ -153,7 +153,7 @@ class CartScreen extends StatelessWidget {
               onPressed: () {
                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainScreen()));
               },
-              child: Text('Continue Shopping'),
+              child: Text('Continue Shopping',style: TextStyle(color: Colors.blue.shade500),),
             ),
           ],
         ),
