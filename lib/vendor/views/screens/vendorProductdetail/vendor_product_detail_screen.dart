@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:quicko/vendor/views/screens/edit_product_screen.dart';
 
 import '../../../../utils/show_snackbar.dart';
 
