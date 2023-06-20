@@ -4,8 +4,7 @@ class ProductProvider with ChangeNotifier{
   Map<String, dynamic> productData = {};
 
   getFormData({String? productName, double? productPrice,int? productQuantity,
-    String? category,String? description,List<String>? imageUrlList,
-  String? brandName}){
+    String? category,String? description,List<String>? imageUrlList}){
     if(productName != null){
       productData ["productName"] = productName;
     }
@@ -24,8 +23,6 @@ class ProductProvider with ChangeNotifier{
     }if(imageUrlList!=null){
       productData ["imageUrlList"] = imageUrlList;
 
-    }if(brandName!=null){
-      productData ["brandName"] = brandName;
     }
     notifyListeners();
   }

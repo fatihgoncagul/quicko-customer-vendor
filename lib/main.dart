@@ -9,6 +9,7 @@ import 'package:quicko/provider/cart_provider.dart';
 import 'package:quicko/provider/product_provider.dart';
 import 'package:quicko/splash_screen.dart';
 import 'package:quicko/vendor/views/auth/vendor_auth.dart';
+import 'package:quicko/vendor/views/screens/main_vendor_screen.dart';
 import 'package:quicko/views/customers/main_screen.dart';
 import 'package:quicko/views/customers/productDetail/product_detail_screen.dart';
 
@@ -127,7 +128,7 @@ class InitialScreen extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.push(context,
+                  Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (BuildContext context) {
                     return VendorAuthScreen();
                   }));
@@ -156,7 +157,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Poppins-Bold',
         useMaterial3: true,
       ),
-      home: MainScreen(),
+      home: InitialScreen(),
       builder: EasyLoading.init(),
     );
   }

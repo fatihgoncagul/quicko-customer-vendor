@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import 'package:quicko/provider/product_provider.dart';
 import 'package:quicko/vendor/views/screens/main_vendor_screen.dart';
 import 'package:quicko/vendor/views/screens/upload_tab_screens/%C4%B1mages_screen.dart';
-import 'package:quicko/vendor/views/screens/upload_tab_screens/attributes_screen.dart';
 import 'package:quicko/vendor/views/screens/upload_tab_screens/general_screen.dart';
 import 'package:uuid/uuid.dart';
 
@@ -17,7 +16,6 @@ class UploadScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final ProductProvider _productProvider = Provider.of<ProductProvider>(context);
     return DefaultTabController(
-
       length: 4,
       child: Form(
         key: _formKey,
@@ -30,9 +28,6 @@ class UploadScreen extends StatelessWidget {
                 child: Text('General'),
               ),
               Tab(
-                child: Text('Attributes'),
-              ),
-              Tab(
                 child: Text('Images'),
               ),
             ],
@@ -41,7 +36,6 @@ class UploadScreen extends StatelessWidget {
           body: TabBarView(
             children: [
               GeneralScreen(),
-              AttributesScreen(),
               ImagesScreen(),
             ],
           ),
@@ -62,7 +56,6 @@ class UploadScreen extends StatelessWidget {
                 "description": _productProvider.productData["description"],
                 "imageUrlList": _productProvider.productData["imageUrlList"],
                 "imageUrlList": _productProvider.productData["imageUrlList"],
-                "brandName": _productProvider.productData["brandName"],
                 "vendorId": FirebaseAuth.instance.currentUser!.uid,
                 'approved' : false,
               }).whenComplete((){

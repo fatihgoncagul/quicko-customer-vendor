@@ -17,7 +17,6 @@ class VendorProductDetailScreen extends StatefulWidget {
 class _VendorProductDetailScreenState extends State<VendorProductDetailScreen> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final TextEditingController _productNameController = TextEditingController();
-  final TextEditingController _branNameController = TextEditingController();
   final TextEditingController _quantityController = TextEditingController();
   final TextEditingController _productPriceController = TextEditingController();
   final TextEditingController _productDescriptionController =
@@ -28,7 +27,6 @@ class _VendorProductDetailScreenState extends State<VendorProductDetailScreen> {
   void initState() {
     setState(() {
       _productNameController.text = widget.productData['productName'];
-      _branNameController.text = widget.productData['brandName'];
       _quantityController.text = widget.productData['productQuantity'].toString();
       _productPriceController.text =
           widget.productData['productPrice'].toString();
@@ -61,10 +59,6 @@ class _VendorProductDetailScreenState extends State<VendorProductDetailScreen> {
               decoration: InputDecoration(labelText: 'Product Name'),
             ),
 
-            TextFormField(
-              controller: _branNameController,
-              decoration: InputDecoration(labelText: 'Brand Name'),
-            ),
             SizedBox(
               height: 20,
             ),
@@ -115,7 +109,6 @@ class _VendorProductDetailScreenState extends State<VendorProductDetailScreen> {
                   .doc(widget.productData['productId'])
                   .update({
                 'productName': _productNameController.text,
-                'brandName': _branNameController.text,
                 'productQuantity': productQuantity,
                 'productPrice': productPrice,
                 'description': _productDescriptionController.text,

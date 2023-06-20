@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quicko/views/customers/nav_screens/payment/generateQR_screen.dart';
 
 import '../../main_screen.dart';
 import '../cart_screen.dart';
@@ -57,7 +58,13 @@ class _PaymentScreenState extends State<PaymentScreen> {
             paymentMethod("Visa", "assets/images/visa.png"),
             SizedBox(height: 200),
             GestureDetector(
-              onTap: () => Navigator.of(context).pushNamed('/generateQRScreen'),
+              onTap: () {
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            QRGeneratorScreen()));
+              },
               child: Container(
                 height: 60,
                 width: 250,

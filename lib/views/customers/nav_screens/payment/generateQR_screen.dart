@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:quicko/views/customers/main_screen.dart';
 
 class QRGeneratorScreen extends StatefulWidget {
   @override
@@ -18,7 +19,8 @@ class _QRGeneratorScreenState extends State<QRGeneratorScreen> {
 
   fetchLastOrder() async {
     final orders = FirebaseFirestore.instance.collection('orders');
-    final snapshot = await orders.orderBy('orderDate', descending: true).limit(1).get();
+    final snapshot =
+        await orders.orderBy('orderDate', descending: true).limit(1).get();
 
     if (snapshot.docs.isNotEmpty) {
       final order = snapshot.docs.first;
@@ -26,7 +28,6 @@ class _QRGeneratorScreenState extends State<QRGeneratorScreen> {
       setState(() {
         qrData = order["orderId"];
       });
-
     }
   }
 
@@ -40,36 +41,43 @@ class _QRGeneratorScreenState extends State<QRGeneratorScreen> {
         child: qrData.isEmpty
             ? CircularProgressIndicator()
             : Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            QrImageView(
-              data: qrData,
-              version: QrVersions.auto,
-              size: 200.0,
-            ),
-            SizedBox(height: 20.0),
-            Text(
-              'Siparişiniz oluşturulmuştur\nLütfen QR Kodunuzu Kasaya Okutun',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  QrImageView(
+                    data: qrData,
+                    version: QrVersions.auto,
+                    size: 200.0,
+                  ),
+                  SizedBox(height: 20.0),
+                  Text(
+                    'Siparişiniz oluşturulmuştur\nLütfen QR Kodunuzu Kasaya Okutun',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
       ),
       bottomNavigationBar: Padding(
         padding: EdgeInsets.all(8.0),
         child: ElevatedButton(
-          onPressed: () => Navigator.of(context).pushNamed('/homePage'),
-          child: Text('Ana Sayfaya Dön'),
+          onPressed: () {
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => MainScreen()));
+          },
+          child: Text(
+            'Ana Sayfaya Dön',
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
           style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(Colors.orange),
+            backgroundColor: MaterialStateProperty.all(Colors.blue),
           ),
         ),
       ),
-
     );
   }
 }
