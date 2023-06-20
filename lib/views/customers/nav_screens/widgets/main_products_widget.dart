@@ -20,13 +20,13 @@ class MainProductWidget extends StatelessWidget {
 
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
-            child: LinearProgressIndicator(
+            child: CircularProgressIndicator(
               color: Colors.blue.shade700,
             ),
           );
         }
         return Container(
-          height: 280,
+          height: 150,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
@@ -40,12 +40,15 @@ class MainProductWidget extends StatelessWidget {
                   }));
                 },
                 child: Card(
+
                   child: Column(
                     children: [
                       Container(
                         height: 80,
+
                         width: 150,
                         decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(6),
                           image: DecorationImage(
                             image: NetworkImage(
                               productData['imageUrlList'][0],
@@ -54,28 +57,27 @@ class MainProductWidget extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          productData['productName'],
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 4,
+                      Column(
+                        children: [
+                          Text(
+                            productData['productName'],
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 3,
+                            ),
                           ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          '\$' + productData['productPrice'].toStringAsFixed(2),
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 4,
-                            color: Colors.yellow.shade900,
+                          Text(
+                            '\$' + productData['productPrice'].toStringAsFixed(2),
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 3,
+                              color: Colors.black54,
+
+                            ),
                           ),
-                        ),
+                        ],
                       ),
                     ],
                   ),

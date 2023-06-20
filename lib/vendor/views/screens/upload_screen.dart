@@ -42,7 +42,7 @@ class UploadScreen extends StatelessWidget {
           bottomSheet: Padding(
             padding: const EdgeInsets.all(8.0),
             child: ElevatedButton(style:
-              ElevatedButton.styleFrom(primary: Colors.yellow.shade900),
+              ElevatedButton.styleFrom(primary: Colors.blue),
               onPressed: ()async{
               EasyLoading.show(status: 'Please Wait');
               if(_formKey.currentState!.validate()){
@@ -67,7 +67,7 @@ class UploadScreen extends StatelessWidget {
                 }));
               });
             }
-            },child:Text("Save") ,),
+            },child:Text("Save",style: TextStyle(color: Colors.white),) ,),
           ),
         ),
       ),

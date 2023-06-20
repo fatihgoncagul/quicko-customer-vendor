@@ -59,7 +59,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
             SizedBox(height: 200),
             GestureDetector(
               onTap: () {
-                Navigator.pushReplacement(
+                Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) =>

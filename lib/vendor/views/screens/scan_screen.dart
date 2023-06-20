@@ -37,6 +37,22 @@ class _ScanScreenState extends State<ScanScreen> {
         },
         child: Icon(Icons.camera),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.all(8.0),
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text(
+            'Back',
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ),
     );
   }
 

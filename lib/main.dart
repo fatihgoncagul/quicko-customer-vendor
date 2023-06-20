@@ -10,8 +10,7 @@ import 'package:quicko/provider/product_provider.dart';
 import 'package:quicko/splash_screen.dart';
 import 'package:quicko/vendor/views/auth/vendor_auth.dart';
 import 'package:quicko/vendor/views/screens/main_vendor_screen.dart';
-import 'package:quicko/views/customers/main_screen.dart';
-import 'package:quicko/views/customers/productDetail/product_detail_screen.dart';
+import 'package:quicko/vendor/views/screens/vendor_order_screen.dart';
 
 
 import 'views/customers/auth/login_screen.dart';
@@ -157,7 +156,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Poppins-Bold',
         useMaterial3: true,
       ),
-      home: InitialScreen(),
+      home: SplashScreen(),
       builder: EasyLoading.init(),
     );
   }

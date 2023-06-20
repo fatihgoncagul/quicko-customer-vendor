@@ -39,6 +39,14 @@ class _VendorOrderScreenState extends State<VendorOrderScreen> {
               bool isPickedUp = data['isPickedUp'];
               String statusText = isPickedUp ? 'order delivered.' : 'order not delivered';
 
+              double totalPrice = 0.0;
+              List<dynamic> items = data['items'];
+              for (int i = 0; i < items.length; i++) {
+                int quantity = items[i]['quantity'];
+                double productPrice = items[i]['productPrice'];
+                totalPrice += quantity * productPrice;
+              }
+
               return Card(
                 elevation: 2,
                 margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -59,7 +67,7 @@ class _VendorOrderScreenState extends State<VendorOrderScreen> {
                         ),
                     ],
                   ),
-                  subtitle: Text("${data['fullName']}'s ${statusText} " ),
+                  subtitle: Text("${data['fullName']}'s ${statusText} "),
                   onTap: () {
                     showDialog(
                       context: context,
@@ -92,19 +100,19 @@ class _VendorOrderScreenState extends State<VendorOrderScreen> {
                                   ),
                                 ),
                                 SizedBox(height: 8.0),
-                                for (int i = 0; i < data['items'].length; i++)
+                                for (int i = 0; i < items.length; i++)
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text('Product ${i + 1}'),
-                                      Text('Product Name: ${data['items'][i]['productName']}'),
-                                      Text('Quantity: ${data['items'][i]['quantity']}'),
-                                      Text('Product Price: ${data['items'][i]['productPrice']}'),
+                                      Text('Product Name: ${items[i]['productName']}'),
+                                      Text('Quantity: ${items[i]['quantity']}'),
+                                      Text('Product Price: ${items[i]['productPrice']}'),
                                       SizedBox(height: 16.0),
                                     ],
                                   ),
                                 Text(
-                                  'Total Price: \$${data['totalPrice'].toStringAsFixed(2)}',
+                                  'Total Price: \$${totalPrice.toStringAsFixed(2)}',
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 16.0,
