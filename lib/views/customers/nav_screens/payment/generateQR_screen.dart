@@ -50,7 +50,7 @@ class _QRGeneratorScreenState extends State<QRGeneratorScreen> {
                   ),
                   SizedBox(height: 20.0),
                   Text(
-                    'Siparişiniz oluşturulmuştur\nLütfen QR Kodunuzu Kasaya Okutun',
+                    'Order is Created\nPlease Scan your QR Code to Store Checkout',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 18.0,
@@ -68,7 +68,7 @@ class _QRGeneratorScreenState extends State<QRGeneratorScreen> {
                 context, MaterialPageRoute(builder: (context) => MainScreen()));
           },
           child: Text(
-            'Ana Sayfaya Dön',
+            'Back to the Main Page',
             style: TextStyle(
               color: Colors.white,
             ),

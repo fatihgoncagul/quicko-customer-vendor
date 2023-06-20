@@ -144,15 +144,17 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         child: InkWell(
           onTap: () {
             if (_cartProvider.isVendorIdSame(widget.productData['vendorId'])) {
-              _cartProvider.addProductToCart(
+              if (!_cartProvider.getCartItems.containsKey(widget.productData['productId'])) {
+                _cartProvider.addProductToCart(
                   widget.productData['productName'],
                   widget.productData['productId'],
                   widget.productData['imageUrlList'],
                   1,
                   widget.productData['productQuantity'],
                   widget.productData['productPrice'],
-                  widget.productData['vendorId']
-              );
+                  widget.productData['vendorId'],
+                );
+              }
             } else {
               showDialog(
                 context: context,
@@ -171,6 +173,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               );
             }
           },
+
           child: Container(
             height: 50,
             width: MediaQuery.of(context).size.width,
@@ -188,7 +191,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   padding: const EdgeInsets.all(4.0),
                   child: Icon(
                     CupertinoIcons.cart,
-                    color: Colors.blue,
+                    color: Colors.white,
                     size: 24,
                   ),
                 ),

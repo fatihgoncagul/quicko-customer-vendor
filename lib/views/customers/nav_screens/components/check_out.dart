@@ -129,7 +129,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                 _cartProvider.getCartItems.clear();
                               });
                               EasyLoading.dismiss();
-                              Navigator.pushReplacement(
+                              Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
