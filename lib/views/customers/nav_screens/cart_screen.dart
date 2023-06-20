@@ -3,13 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quicko/provider/cart_provider.dart';
 import 'package:quicko/views/customers/main_screen.dart';
-import 'package:quicko/views/customers/nav_screens/models/Cart.dart';
-
-import 'components/body.dart';
 import 'package:quicko/views/customers/nav_screens/components/check_out.dart';
 
 class CartScreen extends StatelessWidget {
-  //static String routeName = "/cart";
 
   @override
   Widget build(BuildContext context) {

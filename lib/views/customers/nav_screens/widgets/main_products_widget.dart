@@ -3,14 +3,26 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quicko/views/customers/productDetail/product_detail_screen.dart';
 
-class MainProductWidget extends StatelessWidget {
+class MainProductWidget extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    final Stream<QuerySnapshot> _productsStream = FirebaseFirestore.instance
+  _MainProductWidgetState createState() => _MainProductWidgetState();
+}
+
+class _MainProductWidgetState extends State<MainProductWidget> {
+  late Stream<QuerySnapshot> _productsStream;
+  int _productCount = 2;
+
+  @override
+  void initState() {
+    super.initState();
+    _productsStream = FirebaseFirestore.instance
         .collection('products')
         .where('approved', isEqualTo: true)
         .snapshots();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
       stream: _productsStream,
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -25,70 +37,118 @@ class MainProductWidget extends StatelessWidget {
             ),
           );
         }
-        return Container(
-          height: 150,
-          child: ListView.separated(
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (context, index) {
-              final productData = snapshot.data!.docs[index];
-              return GestureDetector(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return ProductDetailScreen(
-                      productData: productData,
+
+        final products = snapshot.data!.docs;
+        final productCount = products.length;
+        final displayCount =
+        _productCount <= productCount ? _productCount : productCount;
+
+        return Column(
+          children: [
+            GridView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 12.0,
+                mainAxisSpacing: 12.0,
+                mainAxisExtent: 240,
+              ),
+              itemCount: displayCount,
+              itemBuilder: (context, index) {
+                final productData = products[index];
+                final productName =
+                    '${productData['productName'][0].toUpperCase()}${productData['productName'].substring(1)}';
+
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) {
+                        return ProductDetailScreen(
+                          productData: productData,
+                        );
+                      }),
                     );
-                  }));
-                },
-                child: Card(
-
-                  child: Column(
-                    children: [
-                      Container(
-                        height: 80,
-
-                        width: 150,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(6),
-                          image: DecorationImage(
-                            image: NetworkImage(
-                              productData['imageUrlList'][0],
-                            ),
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16.0),
+                      color: Colors.grey.shade200,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ClipRRect(
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(16.0),
+                            topRight: Radius.circular(16.0),
+                          ),
+                          child: Image.network(
+                            "${productData['imageUrlList'][0]}",
+                            height: 170,
+                            width: double.infinity,
                             fit: BoxFit.cover,
                           ),
                         ),
-                      ),
-                      Column(
-                        children: [
-                          Text(
-                            productData['productName'],
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 3,
-                            ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                productName,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .subtitle1!
+                                    .merge(
+                                  const TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 8.0),
+                              Text(
+                                "\$${productData['productPrice'].toStringAsFixed(2)}",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .subtitle2!
+                                    .merge(
+                                  TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey.shade500,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                          Text(
-                            '\$' + productData['productPrice'].toStringAsFixed(2),
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 3,
-                              color: Colors.black54,
-
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+            if (_productCount < productCount)
+              Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      _productCount += 2;
+                    });
+                  },
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                    backgroundColor: Colors.grey.shade100, // Change background color
+                  ),
+                  child: Text(
+                    'View More',
+                    style: TextStyle(color: Colors.blue.shade300, fontSize: 16), // Adjust text color and size
                   ),
                 ),
-              );
-            },
-            separatorBuilder: (context, _) => SizedBox(
-              width: 15,
-            ),
-            itemCount: snapshot.data!.docs.length,
-          ),
+              ),
+          ],
         );
       },
     );

@@ -4,8 +4,9 @@ import 'package:quicko/views/customers/nav_screens/cart_screen.dart';
 
 class WelcomeText extends StatefulWidget {
   const WelcomeText({
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
+
   @override
   _WelcomeTextState createState() => _WelcomeTextState();
 }

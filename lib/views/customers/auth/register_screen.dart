@@ -133,6 +133,7 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
                       borderRadius: BorderRadius.circular(16.0),
                     ),
                     child: TextFormField(
+                      keyboardType: TextInputType.emailAddress,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please Enter Your Email';
@@ -280,7 +281,7 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
                           return LoginScreen();
                         }));
                       },
-                      child: Text('Login',style: TextStyle(fontSize: 18),),
+                      child: Text('Login',style: TextStyle(fontSize: 18,color: Colors.blue),),
                     ),
                   ],
                 ),

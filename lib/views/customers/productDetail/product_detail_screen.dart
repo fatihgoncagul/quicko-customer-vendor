@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 import 'package:quicko/provider/cart_provider.dart';
-import 'package:quicko/utils/show_snackbar.dart';
+
 
 class ProductDetailScreen extends StatefulWidget {
   final dynamic productData;
@@ -22,17 +22,16 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     final CartProvider _cartProvider = Provider.of<CartProvider>(context);
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         elevation: 0,
-        backgroundColor: Colors.blue,
         iconTheme: IconThemeData(
           color: Colors.black,
         ),
         title: Text(
           widget.productData['productName'],
           style: TextStyle(
-            color: Colors.white,
-            fontSize: 18,
             fontWeight: FontWeight.bold,
+            fontSize: 24,
             letterSpacing: 2,
           ),
         ),
@@ -43,6 +42,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             Stack(
               children: [
                 Container(
+                  color: Colors.blue,
                   height: 300,
                   width: double.infinity,
                   child: PhotoView(
@@ -188,7 +188,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   padding: const EdgeInsets.all(4.0),
                   child: Icon(
                     CupertinoIcons.cart,
-                    color: Colors.white,
+                    color: Colors.blue,
                     size: 24,
                   ),
                 ),

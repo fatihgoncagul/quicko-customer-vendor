@@ -240,8 +240,10 @@ class StoreDetailScreen extends StatelessWidget {
                         itemCount: products.length,
                         itemBuilder: (BuildContext context, int index) {
                           final product = products[index];
+                          final isEvenIndex = index % 2 == 0;
+                          final cardColor = isEvenIndex ? Colors.white : Colors.grey.shade200;
                           return Card(
-                            color: Colors.white,
+                            color: cardColor,
                             elevation: 4,
                             margin: EdgeInsets.only(bottom: 16),
                             child: ListTile(

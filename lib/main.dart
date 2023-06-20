@@ -14,6 +14,7 @@ import 'package:quicko/vendor/views/screens/main_vendor_screen.dart';
 import 'package:quicko/vendor/views/screens/scan_screen.dart';
 import 'package:quicko/vendor/views/screens/vendorProductDetail/vendor_product_detail_screen.dart';
 import 'package:quicko/vendor/views/screens/vendor_order_screen.dart';
+import 'package:quicko/views/customers/main_screen.dart';
 
 
 import 'views/customers/auth/login_screen.dart';

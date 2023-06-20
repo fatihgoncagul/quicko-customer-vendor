@@ -3,6 +3,7 @@ import 'package:quicko/controllers/auth_controller.dart';
 import 'package:quicko/utils/show_snackbar.dart';
 import 'package:quicko/views/customers/auth/register_screen.dart';
 import 'package:quicko/views/customers/main_screen.dart';
+import 'package:quicko/views/customers/nav_screens/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -69,6 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     borderRadius: BorderRadius.circular(16.0),
                   ),
                   child: TextFormField(
+                    keyboardType: TextInputType.emailAddress,
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Please enter a valid email';
@@ -161,7 +163,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                     child: Text(
                       'Register',
-                      style: TextStyle(fontSize: 18),
+                      style: TextStyle(fontSize: 18,color: Colors.blue),
                     ),
                   ),
                 ],

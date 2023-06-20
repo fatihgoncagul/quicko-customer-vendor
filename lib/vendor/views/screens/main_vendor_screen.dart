@@ -48,44 +48,68 @@ class _MainVendorScreenState extends State<MainVendorScreen> {
           side: BorderSide(color: Colors.black),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _pageIndex,
-        onTap: _selectPage,
-        backgroundColor: Colors.blue,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.black,
-        type: BottomNavigationBarType.fixed,
-        items: [
-          BottomNavigationBarItem(
-            icon: Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Icon(Icons.upload),
-            ),
-            label: 'Upload',
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20.0),
+            topRight: Radius.circular(20.0),
           ),
-          BottomNavigationBarItem(
-            icon: Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Icon(Icons.edit),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.4),
+              spreadRadius: 2,
+              blurRadius: 4,
+              offset: Offset(0, 3), // Gölgelendirme yönlendirmesi
             ),
-            label: 'Edits',
+          ],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30.0),
+            topRight: Radius.circular(30.0),
           ),
-          BottomNavigationBarItem(
-            icon: Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Icon(CupertinoIcons.shopping_cart),
-            ),
-            label: 'Orders',
+          child: BottomNavigationBar(
+            currentIndex: _pageIndex,
+            onTap: _selectPage,
+            backgroundColor: Colors.blue,
+            selectedItemColor: Colors.white,
+            unselectedItemColor: Colors.black,
+            type: BottomNavigationBarType.fixed,
+            items: [
+              BottomNavigationBarItem(
+                icon: Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Icon(Icons.upload),
+                ),
+                label: 'Upload',
+              ),
+              BottomNavigationBarItem(
+                icon: Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Icon(Icons.edit),
+                ),
+                label: 'Edits',
+              ),
+              BottomNavigationBarItem(
+                icon: Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Icon(CupertinoIcons.shopping_cart),
+                ),
+                label: 'Orders',
+              ),
+              BottomNavigationBarItem(
+                icon: Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Icon(Icons.logout),
+                ),
+                label: 'Log out',
+              ),
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Icon(Icons.logout),
-            ),
-            label: 'Log out',
-          ),
-        ],
+        ),
       ),
+
+
       body: _pages[_pageIndex],
     );
   }

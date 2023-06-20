@@ -1,23 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:quicko/views/customers/nav_screens/widgets/home_products.dart';
-import 'package:quicko/views/customers/nav_screens/widgets/main_products_widget.dart';
 import 'package:quicko/views/customers/productDetail/store_detail.dart';
 
-class StoreText extends StatefulWidget {
-  @override
-  State<StoreText> createState() => _StoreTextState();
-}
-
-class _StoreTextState extends State<StoreText> {
-
+class StoreText extends StatelessWidget {
+  final Stream<QuerySnapshot> _storeStream =
+  FirebaseFirestore.instance.collection('vendors').snapshots();
 
   @override
   Widget build(BuildContext context) {
-    final Stream<QuerySnapshot> _storeStream =
-    FirebaseFirestore.instance.collection('vendors').snapshots();
     return Padding(
-      padding: const EdgeInsets.all(9.0),
+      padding: const EdgeInsets.all(8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -39,30 +31,77 @@ class _StoreTextState extends State<StoreText> {
                 );
               }
 
-              return Container(
-                height: snapshot.data!.size * 100.0,
+              final storeList = snapshot.data!.docs;
+
+              return SizedBox(
+                height: 160.0,
                 child: ListView.builder(
-                    itemCount: snapshot.data!.size,
-                    itemBuilder: (context, index) {
-                      final storeData = snapshot.data!.docs[index];
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                                return StoreDetailScreen(
-                                  storeData: storeData,
-                                );
-                              }));
-                        },
-                        child: ListTile(
-                          title: Text(storeData['businessName']),
-                          subtitle: Text(storeData['cityValue']),
-                          leading: CircleAvatar(
-                            backgroundImage: NetworkImage(storeData['storeImage']),
+                  scrollDirection: Axis.horizontal,
+                  itemCount: storeList.length,
+                  itemBuilder: (context, index) {
+                    final storeData = storeList[index];
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) {
+                            return StoreDetailScreen(storeData: storeData);
+                          }),
+                        );
+                      },
+                      child: Container(
+                        width: 140.0,
+                        margin: EdgeInsets.only(right: 16.0),
+                        child: Card(
+                          margin: EdgeInsets.zero,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16.0),
                           ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(16.0),
+                                child: Image.network(
+                                  storeData['storeImage'],
+                                  height: 100.0,
+                                  width: double.infinity,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      storeData['businessName'],
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14.0,
+                                      ),
+                                    ),
+                                    SizedBox(height: 4.0),
+                                    Text(
+                                      storeData['cityValue'],
+                                      style: TextStyle(
+                                        fontSize: 12.0,
+                                        color: Colors.grey,
+                                      ),
+                                      maxLines: 1, // Set maximum lines to 1
+                                      overflow: TextOverflow.ellipsis, // Handle overflow with ellipsis
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          color: Colors.grey.shade200,
                         ),
-                      );
-                    }),
+                      ),
+                    );
+                  },
+                ),
               );
             },
           ),

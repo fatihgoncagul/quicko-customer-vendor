@@ -38,22 +38,44 @@ class StoreScreen extends StatelessWidget {
 
           return Container(
             height: 500,
-            child: ListView.builder(
+            child: ListView.separated(
+              separatorBuilder: (context, index) => Divider(
+                color: Colors.grey.shade300,
+                height: 1,
+              ),
               itemCount: snapshot.data!.size,
               itemBuilder: (context, index) {
                 final storeData = snapshot.data!.docs[index];
                 return GestureDetector(
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return StoreDetailScreen(
-                        storeData: storeData,
-                      );
-                    }));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return StoreDetailScreen(
+                            storeData: storeData,
+                          );
+                        },
+                      ),
+                    );
                   },
                   child: ListTile(
-                    title: Text(storeData['businessName']),
-                    subtitle: Text(storeData['cityValue']),
+                    contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                    title: Text(
+                      storeData['businessName'],
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: Colors.black,
+                      ),
+                    ),
+                    subtitle: Text(
+                      storeData['cityValue'],
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey.shade600,
+                      ),
+                    ),
                     leading: CircleAvatar(
                       backgroundImage: NetworkImage(storeData['storeImage']),
                     ),
@@ -62,6 +84,7 @@ class StoreScreen extends StatelessWidget {
               },
             ),
           );
+
         },
       ),
     );
