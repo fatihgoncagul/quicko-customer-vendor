@@ -1,10 +1,13 @@
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
+import 'package:quicko/onboarding_screen.dart';
 import 'package:quicko/provider/cart_provider.dart';
 import 'package:quicko/provider/product_provider.dart';
+import 'package:quicko/splash_screen.dart';
 import 'package:quicko/vendor/views/auth/vendor_auth.dart';
 import 'package:quicko/views/customers/main_screen.dart';
 import 'package:quicko/views/customers/productDetail/product_detail_screen.dart';

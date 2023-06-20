@@ -23,88 +23,98 @@ class StoreDetailScreen extends StatelessWidget {
               height: 200,
               child: Stack(
                 children: [
-                  StreamBuilder<DocumentSnapshot>(
-                    stream: FirebaseFirestore.instance
-                        .collection('vendors')
-                        .doc(storeData['vendorId'])
-                        .snapshots(),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<DocumentSnapshot> snapshot) {
-                      if (snapshot.hasError) {
+                  ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(20.0),
+                      bottomRight: Radius.circular(20.0),
+                    ),
+                    child: StreamBuilder<DocumentSnapshot>(
+                      stream: FirebaseFirestore.instance
+                          .collection('vendors')
+                          .doc(storeData['vendorId'])
+                          .snapshots(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<DocumentSnapshot> snapshot) {
+                        if (snapshot.hasError) {
+                          return Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage('assets/images/default_vendor_image.jpg'),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          );
+                        }
+
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return Container(
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade200,
+                            ),
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                color: Colors.yellow.shade900,
+                              ),
+                            ),
+                          );
+                        }
+
+                        final Map<String, dynamic>? vendorData =
+                        snapshot.data?.data() as Map<String, dynamic>?;
+
+                        if (vendorData == null ||
+                            vendorData['storeImage'] == null ||
+                            !Uri.parse(vendorData['storeImage']).isAbsolute) {
+                          return Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage('assets/images/default_vendor_image.jpg'),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          );
+                        }
+
+                        final cityValue = vendorData['cityValue'] ?? '';
+                        final email = vendorData['email'] ?? '';
+                        final phone = vendorData['phone'] ?? '';
+
                         return Container(
+                          height: double.infinity,
+                          width: double.infinity,
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                              image: AssetImage(
-                                  'assets/images/default_vendor_image.jpg'),
+                              image: NetworkImage(vendorData['storeImage'] as String),
                               fit: BoxFit.cover,
                             ),
                           ),
-                        );
-                      }
-
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Container(
-                          decoration: BoxDecoration(
-                            color: Colors.grey.shade200,
-                          ),
-                          child: Center(
-                            child: CircularProgressIndicator(
-                              color: Colors.yellow.shade900,
+                          child: Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: CircleAvatar(
+                                backgroundColor: Colors.white,
+                                child: IconButton(
+                                  icon: Icon(Icons.arrow_back),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ),
                             ),
                           ),
                         );
-                      }
-
-                      final Map<String, dynamic>? vendorData =
-                      snapshot.data?.data() as Map<String, dynamic>?;
-
-                      if (vendorData == null ||
-                          vendorData['storeImage'] == null ||
-                          !Uri.parse(vendorData['storeImage']).isAbsolute) {
-                        return Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage(
-                                  'assets/images/default_vendor_image.jpg'),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        );
-                      }
-
-                      final cityValue = vendorData['cityValue'] ?? '';
-                      final email = vendorData['email'] ?? '';
-                      final phone = vendorData['phone'] ?? '';
-
-                      return Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image:
-                            NetworkImage(vendorData['storeImage'] as String),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                  Positioned(
-                    top: 16,
-                    left: 16,
-                    child: CircleAvatar(
-                      backgroundColor: Colors.white,
-                      child: IconButton(
-                        icon: Icon(Icons.arrow_back),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
+                      },
                     ),
                   ),
                 ],
               ),
             ),
+
+
+
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(12.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -142,7 +152,7 @@ class StoreDetailScreen extends StatelessWidget {
                             capitalizeFirstLetter(businessName ?? ''),
                             style: TextStyle(
                               color: Colors.black,
-                              fontSize: 32,
+                              fontSize: 28,
                               fontWeight: FontWeight.bold,
                               letterSpacing: 1.5, // Adjust the letter spacing for uniqueness
                               shadows: [
@@ -231,19 +241,22 @@ class StoreDetailScreen extends StatelessWidget {
                         itemBuilder: (BuildContext context, int index) {
                           final product = products[index];
                           return Card(
-                            elevation: 3,
+                            color: Colors.white,
+                            elevation: 4,
                             margin: EdgeInsets.only(bottom: 16),
                             child: ListTile(
                               title: Text(
                                 product['productName'] as String,
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
+                                  fontSize: 16,
                                 ),
                               ),
                               subtitle: Text(
                                 '\$${product['productPrice'].toStringAsFixed(2)}',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
+                                  fontSize: 14,
                                 ),
                               ),
                               leading: ClipRRect(

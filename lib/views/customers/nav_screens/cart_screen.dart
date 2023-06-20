@@ -43,13 +43,14 @@ class CartScreen extends StatelessWidget {
         itemBuilder: (context, index) {
           final cartData = _cartProvider.getCartItems.values.toList()[index];
           return Card(
+            color: Colors.white,
             child: SizedBox(
-              height: 180,
+              height: 140,
               child: Row(
                 children: [
                   SizedBox(
-                    height: 100,
-                    width: 100,
+                    height: 80,
+                    width: 80,
                     child: Image.network(cartData.imageUrl[0]),
                   ),
                   Padding(
@@ -62,18 +63,19 @@ class CartScreen extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
+                            color:Colors.black,
                           ),
                         ),
                         Text(
                           '\$' + cartData.price.toStringAsFixed(2),
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 16,
                             fontWeight: FontWeight.bold,
-                            color: Colors.blue,
+                            color: Colors.black,
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(top: 14.0),
+                          padding: const EdgeInsets.only(top: 8.0),
                           child: Row(
                             children: [
                               Container(

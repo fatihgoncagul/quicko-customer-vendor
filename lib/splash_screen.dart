@@ -1,4 +1,6 @@
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:quicko/main.dart';
 import 'package:quicko/onboarding_screen.dart';
 
@@ -18,25 +20,21 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   _navigateToInitial()async{
-    await Future.delayed(Duration(milliseconds: 2000),(){});
+    await Future.delayed(Duration(milliseconds: 4000),(){});
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OnboardingScreen(),));
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Container(
-          child: Text(
-            'Splash Screen',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: Colors.black
-            ),
-          ),
-        ),
-      ),
+    return AnimatedSplashScreen(
+      splash: Lottie.asset('assets/animation_lj3lymkd.json'),
+      centered: true,
+      backgroundColor: Colors.blue,
+      nextScreen: OnboardingScreen(),
+      splashIconSize: 160,
+      //splashTransition: SplashTransition.sizeTransition,
+      //animationDuration: const Duration(seconds: 2),
+
     );
   }
 }

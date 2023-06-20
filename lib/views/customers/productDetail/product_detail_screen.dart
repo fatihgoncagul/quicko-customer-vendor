@@ -109,6 +109,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               ),
             ),
             ExpansionTile(
+              initiallyExpanded: true,
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -117,7 +118,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     style: TextStyle(color: Colors.blue),
                   ),
                   Text(
-                    'View More',
+                    'View Less',
                     style: TextStyle(color: Colors.blue),
                   ),
                 ],
