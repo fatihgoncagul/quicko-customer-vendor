@@ -12,17 +12,20 @@ class EditProductScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          elevation: 0,
+          elevation: 8,
           title: Text(
             'Manage Products',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 24,
-              letterSpacing: 4,
+              letterSpacing: 2,
             ),
           ),
-          backgroundColor: Colors.blue,
+          backgroundColor: Colors.blue.shade700,
           bottom: TabBar(
+            unselectedLabelColor: Colors.black,
+            labelColor: Colors.white,
+            indicatorColor: Colors.white,
             tabs: [
               Tab(
                 child: Text('Published'),

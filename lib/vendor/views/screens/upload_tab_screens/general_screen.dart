@@ -74,6 +74,7 @@ class _GeneralScreenState extends State<GeneralScreen> with AutomaticKeepAliveCl
                 decoration: InputDecoration(
                   labelText:'Enter product price',
                 ),
+                keyboardType: TextInputType.number,
               ),
               SizedBox(height: 20,),
               TextFormField(validator: (value){
@@ -89,6 +90,7 @@ class _GeneralScreenState extends State<GeneralScreen> with AutomaticKeepAliveCl
                 decoration: InputDecoration(
                   labelText:'Enter product quanity',
                 ),
+                keyboardType: TextInputType.number,
               ),
               SizedBox(height: 20,),
               DropdownButtonFormField(

@@ -29,6 +29,7 @@ class _VendorRegisterScreenState extends State<VendorRegisterScreen> {
   late String phone;
   Uint8List? _image;
 
+
   final VendorController _vendorController = VendorController();
 
   selectGalleryImage() async {
@@ -73,7 +74,7 @@ class _VendorRegisterScreenState extends State<VendorRegisterScreen> {
                   background: Container(
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
-                          colors: [Colors.yellow.shade900, Colors.yellow]),
+                          colors: [Colors.blue.shade900, Colors.blue]),
                     ),
                     child: Center(
                       child: Column(
@@ -109,52 +110,61 @@ class _VendorRegisterScreenState extends State<VendorRegisterScreen> {
                 key: _formKey,
                 child: Column(
                   children: [
-                    TextFormField(
-                      onChanged: (value){businessName = value;} ,
-                      validator:(value){
-                        if(value!.isEmpty){
-                          return "Please Bussinesses name must not be empty";
-                        }else{
-                          return null;
-                        }
-                      },
-                      keyboardType: TextInputType.name,
-                      decoration: InputDecoration(
-                        labelText: "Business Name",
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextFormField(
+                        onChanged: (value){businessName = value;} ,
+                        validator:(value){
+                          if(value!.isEmpty){
+                            return "Please Bussinesses name must not be empty";
+                          }else{
+                            return null;
+                          }
+                        },
+                        keyboardType: TextInputType.name,
+                        decoration: InputDecoration(
+                          labelText: "Business Name",
+                        ),
                       ),
                     ),
                     SizedBox(
                       height: 10,
                     ),
-                    TextFormField(
-                      onChanged: (value){email = value;} ,
-                      validator:(value){
-                        if(value!.isEmpty){
-                          return "Please mail adress must not be empty";
-                        }else{
-                          return null;
-                        }
-                      },
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: InputDecoration(
-                        labelText: "Email Adress",
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextFormField(
+                        onChanged: (value){email = value;} ,
+                        validator:(value){
+                          if(value!.isEmpty){
+                            return "Please mail adress must not be empty";
+                          }else{
+                            return null;
+                          }
+                        },
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: InputDecoration(
+                          labelText: "Email Adress",
+                        ),
                       ),
                     ),
                     SizedBox(
                       height: 10,
                     ),
-                    TextFormField(
-                      onChanged: (value){phone = value;} ,
-                      validator:(value){
-                        if(value!.isEmpty){
-                          return "Please phone number must not be empty";
-                        }else{
-                          return null;
-                        }
-                      },
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        labelText: "Phone Number",
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextFormField(
+                        onChanged: (value){phone = value;} ,
+                        validator:(value){
+                          if(value!.isEmpty){
+                            return "Please phone number must not be empty";
+                          }else{
+                            return null;
+                          }
+                        },
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          labelText: "Phone Number",
+                        ),
                       ),
                     ),
                     Padding(
@@ -182,10 +192,10 @@ class _VendorRegisterScreenState extends State<VendorRegisterScreen> {
                         _saveVendorDetail();
                       },
                       child: Container(
-                        height: 30,
+                        height: 40,
                         width: MediaQuery.of(context).size.width - 40,
                         decoration: BoxDecoration(
-                          color: Colors.yellow.shade900,
+                          color: Colors.blue.shade900,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Center(

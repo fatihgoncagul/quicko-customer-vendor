@@ -48,38 +48,53 @@ class UnpublishedTab extends StatelessWidget {
               itemBuilder: ((context, index) {
                 final vendorProductData = snapshot.data!.docs[index];
                 return Slidable(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Container(
-                            height: 80,
-                            width: 80,
-                            child: Image.network(
-                                vendorProductData['imageUrlList'][0]),
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                vendorProductData['productName'],
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                ),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [Colors.blue, Colors.blue.shade900],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Container(
+                              height: 80,
+                              width: 80,
+                              child: Image.network(
+                                  vendorProductData['imageUrlList'][0]),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    vendorProductData['productName'],
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  Text(
+                                    '\$' +
+                                        ' ' +
+                                        vendorProductData['productPrice']
+                                            .toStringAsFixed(2),
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              Text(
-                                '\$' +
-                                    vendorProductData['productPrice']
-                                        .toStringAsFixed(2),
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     // Specify a key if the Slidable is dismissible.

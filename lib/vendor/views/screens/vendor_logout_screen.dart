@@ -9,9 +9,12 @@ class VendorLogoutScreen extends StatelessWidget {
     return Center(
       child: TextButton(
         onPressed: () async {
-          _auth.signOut();
+          await _auth.signOut();
         },
-        child: Text("Vendor Logout Screen"),
+        style: TextButton.styleFrom(
+          backgroundColor: Colors.blue, // Arka plan rengi burada belirlenir
+        ),
+        child: Text("Vendor Logout Screen",style: TextStyle(color: Colors.white),),
       ),
     );
   }

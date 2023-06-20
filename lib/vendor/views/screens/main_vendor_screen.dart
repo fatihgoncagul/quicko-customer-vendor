@@ -39,13 +39,13 @@ class _MainVendorScreenState extends State<MainVendorScreen> {
             return ScanScreen();
           }));
         },
-        child: Icon(Icons.scanner),
+        child: Icon(CupertinoIcons.qrcode_viewfinder),
         backgroundColor: Colors.white,
         foregroundColor: Colors.blue,
         elevation: 4,
         shape: BeveledRectangleBorder(
           borderRadius: BorderRadius.circular(12),
-          side: BorderSide(color: Colors.blue.shade500),
+          side: BorderSide(color: Colors.black),
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(

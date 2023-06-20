@@ -12,26 +12,46 @@ import 'package:uuid/uuid.dart';
 class UploadScreen extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
   @override
   Widget build(BuildContext context) {
-    final ProductProvider _productProvider = Provider.of<ProductProvider>(context);
+    final ProductProvider _productProvider =
+        Provider.of<ProductProvider>(context);
     return DefaultTabController(
       length: 4,
       child: Form(
         key: _formKey,
         child: Scaffold(
           appBar: AppBar(
-            backgroundColor: Colors.blue,
-            elevation: 0,
-            bottom:TabBar(tabs: [
-              Tab(
-                child: Text('General'),
+            backgroundColor: Colors.blue.shade700,
+            elevation: 8,
+            centerTitle: true,
+            title: Text(
+              'Upload Products',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 24,
+                letterSpacing: 2,
               ),
-              Tab(
-                child: Text('Images'),
-              ),
-            ],
-            ) ,
+            ),
+            bottom: TabBar(
+              unselectedLabelColor: Colors.black,
+              labelColor: Colors.white,
+              indicatorColor: Colors.white,
+              tabs: [
+                Tab(
+                  child: Text(
+                    'General',
+                  ),
+                ),
+                Tab(
+                  child: Text(
+                    'Images',
+                  ),
+                ),
+              ],
+
+            ),
           ),
           body: TabBarView(
             children: [
@@ -40,34 +60,45 @@ class UploadScreen extends StatelessWidget {
             ],
           ),
           bottomSheet: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ElevatedButton(style:
-              ElevatedButton.styleFrom(primary: Colors.blue),
-              onPressed: ()async{
-              EasyLoading.show(status: 'Please Wait');
-              if(_formKey.currentState!.validate()){
-              final productId = Uuid().v4();
-              await _firestore.collection("products").doc(productId).set({
-                "productId": productId,
-                "productName": _productProvider.productData["productName"],
-                "productPrice": _productProvider.productData["productPrice"],
-                "productQuantity": _productProvider.productData["productQuantity"],
-                "category": _productProvider.productData["category"],
-                "description": _productProvider.productData["description"],
-                "imageUrlList": _productProvider.productData["imageUrlList"],
-                "imageUrlList": _productProvider.productData["imageUrlList"],
-                "vendorId": FirebaseAuth.instance.currentUser!.uid,
-                'approved' : false,
-              }).whenComplete((){
-                _productProvider.clearData();
-                _formKey.currentState!.reset();
-                EasyLoading.dismiss();
-                Navigator.push(context, MaterialPageRoute(builder: (context){
-                  return MainVendorScreen();
-                }));
-              });
-            }
-            },child:Text("Save",style: TextStyle(color: Colors.white),) ,),
+            padding: const EdgeInsets.only(
+                bottom: 32.0, top: 8, left: 16, right: 16),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(primary: Colors.blue),
+              onPressed: () async {
+                EasyLoading.show(status: 'Please Wait');
+                if (_formKey.currentState!.validate()) {
+                  final productId = Uuid().v4();
+                  await _firestore.collection("products").doc(productId).set({
+                    "productId": productId,
+                    "productName": _productProvider.productData["productName"],
+                    "productPrice":
+                        _productProvider.productData["productPrice"],
+                    "productQuantity":
+                        _productProvider.productData["productQuantity"],
+                    "category": _productProvider.productData["category"],
+                    "description": _productProvider.productData["description"],
+                    "imageUrlList":
+                        _productProvider.productData["imageUrlList"],
+                    "imageUrlList":
+                        _productProvider.productData["imageUrlList"],
+                    "vendorId": FirebaseAuth.instance.currentUser!.uid,
+                    'approved': false,
+                  }).whenComplete(() {
+                    _productProvider.clearData();
+                    _formKey.currentState!.reset();
+                    EasyLoading.dismiss();
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return MainVendorScreen();
+                    }));
+                  });
+                }
+              },
+              child: Text(
+                "Save",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
           ),
         ),
       ),

@@ -17,8 +17,18 @@ class _ScanScreenState extends State<ScanScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blue,
       appBar: AppBar(
-        title: Text('Scan QR Code'),
+        backgroundColor: Colors.blue.shade700,
+        centerTitle: true,
+        title: Text(
+          'Scan QR Code',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 24,
+            letterSpacing: 2,
+          ),
+        ),
       ),
       body: Column(
         children: <Widget>[
@@ -45,10 +55,16 @@ class _ScanScreenState extends State<ScanScreen> {
           onPressed: () {
             Navigator.of(context).pop();
           },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.white, // Arka plan rengi
+          ),
           child: Text(
-            'Back',
+            'BACK',
             style: TextStyle(
-              color: Colors.white,
+              fontSize: 18,
+              letterSpacing: 2,
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
             ),
           ),
         ),
@@ -62,7 +78,10 @@ class _ScanScreenState extends State<ScanScreen> {
       controller.pauseCamera();
 
       final String orderId = scanData.code!;
-      final orderDoc = await FirebaseFirestore.instance.collection('orders').doc(orderId).get();
+      final orderDoc = await FirebaseFirestore.instance
+          .collection('orders')
+          .doc(orderId)
+          .get();
       final currentUser = _auth.currentUser;
 
       if (currentUser != null && orderDoc.exists) {

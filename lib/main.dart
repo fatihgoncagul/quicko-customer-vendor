@@ -9,7 +9,10 @@ import 'package:quicko/provider/cart_provider.dart';
 import 'package:quicko/provider/product_provider.dart';
 import 'package:quicko/splash_screen.dart';
 import 'package:quicko/vendor/views/auth/vendor_auth.dart';
+import 'package:quicko/vendor/views/auth/vendor_registor.dart';
 import 'package:quicko/vendor/views/screens/main_vendor_screen.dart';
+import 'package:quicko/vendor/views/screens/scan_screen.dart';
+import 'package:quicko/vendor/views/screens/vendorProductDetail/vendor_product_detail_screen.dart';
 import 'package:quicko/vendor/views/screens/vendor_order_screen.dart';
 
 

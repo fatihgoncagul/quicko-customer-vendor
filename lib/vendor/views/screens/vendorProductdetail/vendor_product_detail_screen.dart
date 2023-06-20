@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:quicko/vendor/views/screens/edit_product_screen.dart';
 
 import '../../../../utils/show_snackbar.dart';
 
@@ -44,7 +45,7 @@ class _VendorProductDetailScreenState extends State<VendorProductDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.yellow.shade900,
+        backgroundColor: Colors.blue,
         elevation: 0,
         title: Text(
           widget.productData['productName'],
@@ -115,14 +116,14 @@ class _VendorProductDetailScreenState extends State<VendorProductDetailScreen> {
                 'category': _categoryNameController.text,
               });
             } else {
-              showSnack(context, 'Upadate Quatinty And Price');
+              showSnack(context, 'Upadated Succcesfully');
             }
           },
           child: Container(
             height: 40,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-              color: Colors.yellow.shade900,
+              color: Colors.blue,
               borderRadius: BorderRadius.circular(
                 10,
               ),
@@ -132,7 +133,7 @@ class _VendorProductDetailScreenState extends State<VendorProductDetailScreen> {
                   "UPDATE PRODUCT",
                   style: TextStyle(
                     fontSize: 18,
-                    letterSpacing: 6,
+                    letterSpacing: 2,
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),

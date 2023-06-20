@@ -87,7 +87,7 @@ class _ImagesScreenState extends State<ImagesScreen> with AutomaticKeepAliveClie
               EasyLoading.dismiss();
             });
           },
-            child:_image.isNotEmpty? Text("Upload"):Text(" ")),
+            child:_image.isNotEmpty? Text("Upload",style: TextStyle(fontSize: 18,color: Colors.blue,),):Text(" ")),
         ],
       ),
     );
