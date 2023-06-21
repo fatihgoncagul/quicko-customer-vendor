@@ -13,16 +13,6 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
 
-  @override
-  void initState() {
-    super.initState();
-    _navigateToInitial();
-  }
-
-  _navigateToInitial()async{
-    await Future.delayed(Duration(milliseconds: 4000),(){});
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OnboardingScreen(),));
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
       splash: Lottie.asset('assets/animation_lj3lymkd.json'),
       centered: true,
       backgroundColor: Colors.blue,
-      nextScreen: OnboardingScreen(),
+      nextScreen: InitialScreen(),
       splashIconSize: 160,
       //splashTransition: SplashTransition.sizeTransition,
       //animationDuration: const Duration(seconds: 2),

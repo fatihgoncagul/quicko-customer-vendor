@@ -52,7 +52,7 @@ class _MainProductWidgetState extends State<MainProductWidget> {
                 crossAxisCount: 2,
                 crossAxisSpacing: 12.0,
                 mainAxisSpacing: 12.0,
-                mainAxisExtent: 240,
+                mainAxisExtent: 200,
               ),
               itemCount: displayCount,
               itemBuilder: (context, index) {
@@ -86,7 +86,7 @@ class _MainProductWidgetState extends State<MainProductWidget> {
                           ),
                           child: Image.network(
                             "${productData['imageUrlList'][0]}",
-                            height: 170,
+                            height: 120,
                             width: double.infinity,
                             fit: BoxFit.cover,
                           ),
@@ -104,6 +104,7 @@ class _MainProductWidgetState extends State<MainProductWidget> {
                                     .merge(
                                   const TextStyle(
                                     fontWeight: FontWeight.w700,
+                                    fontSize: 18,
                                   ),
                                 ),
                               ),
@@ -116,7 +117,8 @@ class _MainProductWidgetState extends State<MainProductWidget> {
                                     .merge(
                                   TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.grey.shade500,
+                                    color: Colors.grey.shade700,
+                                    fontSize: 16,
                                   ),
                                 ),
                               ),
@@ -140,11 +142,11 @@ class _MainProductWidgetState extends State<MainProductWidget> {
                   },
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                    backgroundColor: Colors.grey.shade100, // Change background color
+                    backgroundColor: Colors.black, // Change background color
                   ),
                   child: Text(
                     'View More',
-                    style: TextStyle(color: Colors.blue.shade300, fontSize: 16), // Adjust text color and size
+                    style: TextStyle(color: Colors.white, fontSize: 16), // Adjust text color and size
                   ),
                 ),
               ),

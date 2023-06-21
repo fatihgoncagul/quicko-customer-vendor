@@ -109,7 +109,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     onChanged: (value){
                       address = value;
                     },
-                    controller: _phoneController,
                     decoration: InputDecoration(
                       labelText: 'Enter Address',
                     ),

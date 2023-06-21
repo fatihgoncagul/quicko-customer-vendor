@@ -36,7 +36,19 @@ class _HomeProductWidgetState extends State<HomeProductWidget> {
         }
 
         if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-          return Text("No products available");
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Center(
+              child: Text(
+                "No products have found in this category",
+                textAlign: TextAlign.center, // Metni ortala
+                style: TextStyle(
+                  fontSize: 20, // Font büyüklüğünü ayarla
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          );
         }
 
         final products = snapshot.data!.docs;
@@ -53,7 +65,7 @@ class _HomeProductWidgetState extends State<HomeProductWidget> {
                 crossAxisCount: 2,
                 crossAxisSpacing: 12.0,
                 mainAxisSpacing: 12.0,
-                mainAxisExtent: 240,
+                mainAxisExtent: 200,
               ),
               itemCount: _productCount,
               itemBuilder: (context, index) {
@@ -87,7 +99,7 @@ class _HomeProductWidgetState extends State<HomeProductWidget> {
                           ),
                           child: Image.network(
                             "${productData['imageUrlList'][0]}",
-                            height: 170,
+                            height: 120,
                             width: double.infinity,
                             fit: BoxFit.cover,
                           ),
@@ -102,6 +114,7 @@ class _HomeProductWidgetState extends State<HomeProductWidget> {
                                 style: Theme.of(context).textTheme.subtitle1!.merge(
                                   const TextStyle(
                                     fontWeight: FontWeight.w700,
+                                    fontSize: 18,
                                   ),
                                 ),
                               ),
@@ -111,7 +124,8 @@ class _HomeProductWidgetState extends State<HomeProductWidget> {
                                 style: Theme.of(context).textTheme.subtitle2!.merge(
                                   TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.grey.shade500,
+                                    color: Colors.grey.shade700,
+                                    fontSize: 16,
                                   ),
                                 ),
                               ),
@@ -135,11 +149,11 @@ class _HomeProductWidgetState extends State<HomeProductWidget> {
                   },
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                    backgroundColor: Colors.grey.shade100, // Change background color
+                    backgroundColor: Colors.black, // Change background color
                   ),
                   child: Text(
                     'View More',
-                    style: TextStyle(color: Colors.blue.shade300, fontSize: 16), // Adjust text color and size
+                    style: TextStyle(color: Colors.white, fontSize: 16), // Adjust text color and size
                   ),
                 ),
               ),

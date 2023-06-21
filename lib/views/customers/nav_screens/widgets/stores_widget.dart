@@ -13,9 +13,12 @@ class StoreText extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Stores',
-            style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              'Stores',
+              style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
+            ),
           ),
           StreamBuilder<QuerySnapshot>(
             stream: _storeStream,
@@ -34,7 +37,7 @@ class StoreText extends StatelessWidget {
               final storeList = snapshot.data!.docs;
 
               return SizedBox(
-                height: 160.0,
+                height: 140.0,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: storeList.length,
@@ -50,7 +53,7 @@ class StoreText extends StatelessWidget {
                         );
                       },
                       child: Container(
-                        width: 140.0,
+                        width: 120.0,
                         margin: EdgeInsets.only(right: 16.0),
                         child: Card(
                           margin: EdgeInsets.zero,
@@ -64,7 +67,7 @@ class StoreText extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(16.0),
                                 child: Image.network(
                                   storeData['storeImage'],
-                                  height: 100.0,
+                                  height: 80.0,
                                   width: double.infinity,
                                   fit: BoxFit.cover,
                                 ),

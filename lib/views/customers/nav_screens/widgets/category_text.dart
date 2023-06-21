@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quicko/views/customers/nav_screens/widgets/home_products.dart';
 import 'package:quicko/views/customers/nav_screens/widgets/main_products_widget.dart';
@@ -16,15 +17,18 @@ class _CategoryTextState extends State<CategoryText> {
     final Stream<QuerySnapshot> _categoryStream =
     FirebaseFirestore.instance.collection('categories').snapshots();
     return Padding(
-      padding: const EdgeInsets.all(9.0),
+      padding: const EdgeInsets.only(top: 8.0,left: 8,right: 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Categories',
-            style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0,left: 8),
+            child: Text(
+              'Categories',
+              style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
+            ),
           ),
-          SizedBox(height: 16),
+          SizedBox(height: 8),
           StreamBuilder<QuerySnapshot>(
             stream: _categoryStream,
             builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -47,33 +51,42 @@ class _CategoryTextState extends State<CategoryText> {
                   itemBuilder: (context, index) {
                     final categoryData = snapshot.data!.docs[index];
                     return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: ChoiceChip(
-                        backgroundColor: Colors.blue.shade300,
-                        selectedColor: Colors.blue.shade900,
-                        labelStyle: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
+                      padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                      child: OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                          backgroundColor: _selectedCategory == categoryData['categoryName']
+                              ? Colors.black
+                              : Colors.white,
+                          side: BorderSide(color: Colors.black),
                         ),
-                        selected: _selectedCategory == categoryData['categoryName'],
-                        onSelected: (isSelected) {
+                        onPressed: () {
                           setState(() {
-                            _selectedCategory = isSelected ? categoryData['categoryName'] : null;
+                            _selectedCategory = categoryData['categoryName'];
                           });
                           print(_selectedCategory);
                         },
-                        label: Text(
+                        child: Text(
                           categoryData['categoryName'],
+                          style: TextStyle(
+                            color: _selectedCategory == categoryData['categoryName']
+                                ? Colors.white
+                                : Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     );
                   },
                 ),
               );
+
+
+
+
             },
           ),
-          SizedBox(height: 16),
+          SizedBox(height: 4),
           if (_selectedCategory == null)
             MainProductWidget(),
           if (_selectedCategory != null)

@@ -9,12 +9,7 @@ import 'package:quicko/provider/cart_provider.dart';
 import 'package:quicko/provider/product_provider.dart';
 import 'package:quicko/splash_screen.dart';
 import 'package:quicko/vendor/views/auth/vendor_auth.dart';
-import 'package:quicko/vendor/views/auth/vendor_registor.dart';
-import 'package:quicko/vendor/views/screens/main_vendor_screen.dart';
-import 'package:quicko/vendor/views/screens/scan_screen.dart';
-import 'package:quicko/vendor/views/screens/vendorProductDetail/vendor_product_detail_screen.dart';
-import 'package:quicko/vendor/views/screens/vendor_order_screen.dart';
-import 'package:quicko/views/customers/main_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 import 'views/customers/auth/login_screen.dart';
@@ -35,7 +30,38 @@ void main() async {
   ));
 }
 
-class InitialScreen extends StatelessWidget {
+class InitialScreen extends StatefulWidget {
+
+  @override
+  State<InitialScreen> createState() => _InitialScreenState();
+}
+
+class _InitialScreenState extends State<InitialScreen> {
+  @override
+  void initState() {
+    super.initState();
+    checkOnboardStatus();
+  }
+  void checkOnboardStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isOnboardShown = prefs.getBool('isOnboardShown') ?? false;
+
+    if (isOnboardShown == false) {
+      showOnboardScreen();
+      prefs.setBool('isOnboardShown', true);
+    } else {
+      // Onboard ekranını gösterin ve değeri kaydedin
+
+    }
+  }
+
+  void showOnboardScreen() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => OnboardingScreen()),
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +129,7 @@ class InitialScreen extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.push(context,
+                  Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (BuildContext context) {
                     return LoginScreen();
                   }));

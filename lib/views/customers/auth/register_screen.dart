@@ -276,7 +276,7 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
                     Text('Already Have an Account',style: TextStyle(fontSize: 16),),
                     TextButton(
                       onPressed: () {
-                        Navigator.push(context,
+                        Navigator.pushReplacement(context,
                             MaterialPageRoute(builder: (context) {
                           return LoginScreen();
                         }));
