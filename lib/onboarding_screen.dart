@@ -94,11 +94,29 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     return InitialScreen();
                   }));
                 },
-                child: Text(
-                  'Skip',
-                  style: TextStyle(
-                    fontSize: 16,
+                child: Container(
+                  decoration: BoxDecoration(
                     color: Colors.blue,
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.blue.shade300.withOpacity(0.5), // Gölgenin rengi.
+                        spreadRadius: 3, // Gölgenin ne kadar yayılacağı.
+                        blurRadius: 4, // Gölgenin ne kadar bulanık olacağı.
+                        offset: Offset(0, 3), // Gölgenin x ve y koordinatlarına göre pozisyonu.
+                      ),
+                    ],
+                  ),
+                  height: 40,
+                  width: 60,
+                  child: Center(
+                    child: Text(
+                      'Skip',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
                 ),
               ),

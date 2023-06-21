@@ -4,7 +4,6 @@ import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 import 'package:quicko/provider/cart_provider.dart';
 
-
 class ProductDetailScreen extends StatefulWidget {
   final dynamic productData;
 
@@ -24,6 +23,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       appBar: AppBar(
         centerTitle: true,
         elevation: 0,
+        backgroundColor: Colors.white, // Change AppBar color to white
         iconTheme: IconThemeData(
           color: Colors.black,
         ),
@@ -33,6 +33,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             fontWeight: FontWeight.bold,
             fontSize: 24,
             letterSpacing: 2,
+            color: Colors.black, // Change AppBar text color to black
           ),
         ),
       ),
@@ -42,12 +43,15 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             Stack(
               children: [
                 Container(
-                  color: Colors.blue,
+                  color: Colors.grey[300], // Change color to light grey
                   height: 300,
                   width: double.infinity,
                   child: PhotoView(
                     imageProvider: NetworkImage(
                       widget.productData['imageUrlList'][_imageIndex],
+                    ),
+                    backgroundDecoration: BoxDecoration(
+                      color: Colors.transparent, // Make PhotoView background transparent
                     ),
                   ),
                 ),
@@ -73,11 +77,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                   border: Border.all(
                                     color: Colors.yellow.shade900,
                                   ),
+                                  borderRadius: BorderRadius.circular(10), // Rounded mini images
                                 ),
                                 height: 60,
                                 width: 60,
-                                child: Image.network(
-                                    widget.productData['imageUrlList'][index]),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10), // Rounded mini images
+                                  child: Image.network(widget.productData['imageUrlList'][index]),
+                                ),
                               ),
                             ),
                           );
@@ -90,7 +97,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               height: 20,
             ),
             Padding(
-              padding: const EdgeInsets.all(4.0),
+              padding: const EdgeInsets.all(16.0), // Added padding for readability
               child: Text(
                 '\$' + widget.productData['productPrice'].toStringAsFixed(2),
                 style: TextStyle(
@@ -100,28 +107,22 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 ),
               ),
             ),
-            Text(
-              widget.productData['productName'],
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 22,
-                letterSpacing: 4,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0), // Added padding for readability
+              child: Text(
+                widget.productData['productName'],
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 22,
+                  letterSpacing: 4,
+                ),
               ),
             ),
             ExpansionTile(
-              initiallyExpanded: true,
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Product Description',
-                    style: TextStyle(color: Colors.blue),
-                  ),
-                  Text(
-                    'View Less',
-                    style: TextStyle(color: Colors.blue),
-                  ),
-                ],
+              title: Text(
+                'Product Description',
+                style: TextStyle(color: Colors.black),
+                textAlign: TextAlign.start, // Or TextAlign.left
               ),
               children: [
                 Padding(
@@ -135,7 +136,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   ),
                 ),
               ],
-            ),
+            )
           ],
         ),
       ),
@@ -159,11 +160,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               showDialog(
                 context: context,
                 builder: (ctx) => AlertDialog(
-                  title: Text('Hata'),
-                  content: Text('Aynı anda farklı mağazalardan alışveriş yapamazsınız.'),
+                  title: Text('Warning'),
+                  content: Text('You cant add product from different vendors!'),
                   actions: <Widget>[
                     TextButton(
-                      child: Text('Tamam'),
+                      child: Text('Okay'),
                       onPressed: () {
                         Navigator.of(ctx).pop();
                       },
@@ -182,7 +183,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               color: _cartProvider.getCartItems
                   .containsKey(widget.productData['productId'])
                   ? Colors.grey
-                  : Colors.blue,
+                  : Colors.blueAccent, // Change color to blue accent
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,

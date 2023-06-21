@@ -126,111 +126,88 @@ class _SearchScreenState extends State<SearchScreen> {
                                       ),
                                       child: Row(
                                         children: [
-                                          SizedBox(
-                                            height: 100,
-                                            width: 100,
-                                            child: Image.network(
-                                                e['imageUrlList'][0]),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: ClipOval(
+                                              child: SizedBox(
+                                                height: 100,
+                                                width: 100,
+                                                child: Image.network(
+                                                  e['imageUrlList'][0],
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
+                                            ),
                                           ),
-                                          Expanded(
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  e['productName'],
-                                                  style: TextStyle(
-                                                    fontSize: 18,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.white,
+                                          Padding(
+                                            padding: const EdgeInsets.all(4.0),
+                                            child: Expanded(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    e['productName'],
+                                                    style: TextStyle(
+                                                      fontSize: 18,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.white,
+                                                    ),
                                                   ),
-                                                ),
-                                                Text(
-                                                  e['productPrice']
-                                                      .toStringAsFixed(2),
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 16,
+                                                  Text(
+                                                    e['productPrice']
+                                                        .toStringAsFixed(2),
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 16,
+                                                    ),
                                                   ),
-                                                ),
-                                                FutureBuilder<QuerySnapshot>(
-                                                  future: FirebaseFirestore
-                                                      .instance
-                                                      .collection('vendors')
-                                                      .where('vendorId',
-                                                          isEqualTo:
-                                                              e['vendorId'])
-                                                      .get(),
-                                                  builder:
-                                                      (BuildContext context,
+                                                  Padding(
+                                                    padding: const EdgeInsets.only(top: 16.0),
+                                                    child: FutureBuilder<QuerySnapshot>(
+                                                      future: FirebaseFirestore
+                                                          .instance
+                                                          .collection('vendors')
+                                                          .where('vendorId',
+                                                              isEqualTo:
+                                                                  e['vendorId'])
+                                                          .get(),
+                                                      builder: (BuildContext
+                                                              context,
                                                           AsyncSnapshot<
                                                                   QuerySnapshot>
                                                               vendorSnapshot) {
-                                                    if (vendorSnapshot
-                                                        .hasError) {
-                                                      return Text(
-                                                          'Something went wrong');
-                                                    }
+                                                        if (vendorSnapshot
+                                                            .hasError) {
+                                                          return Text(
+                                                              'Something went wrong');
+                                                        }
 
-                                                    if (vendorSnapshot
-                                                            .connectionState ==
-                                                        ConnectionState
-                                                            .waiting) {
-                                                      return CircularProgressIndicator();
-                                                    }
+                                                        if (vendorSnapshot
+                                                                .connectionState ==
+                                                            ConnectionState
+                                                                .waiting) {
+                                                          return CircularProgressIndicator();
+                                                        }
 
-                                                    final vendorData =
-                                                        vendorSnapshot
-                                                            .data!.docs.first;
+                                                        final vendorData =
+                                                            vendorSnapshot
+                                                                .data!.docs.first;
 
-                                                    return Text(
-                                                      vendorData[
-                                                          'businessName'],
-                                                      style: TextStyle(
-                                                        color: Colors.white,
-                                                      ),
-                                                    );
-                                                  },
-                                                ),
-                                                FutureBuilder<QuerySnapshot>(
-                                                  future: FirebaseFirestore
-                                                      .instance
-                                                      .collection('products')
-                                                      .where('productName',
-                                                          isEqualTo:
-                                                              e['productName'])
-                                                      .get(),
-                                                  builder: (BuildContext
-                                                          context,
-                                                      AsyncSnapshot<
-                                                              QuerySnapshot>
-                                                          categorySnapshot) {
-                                                    if (categorySnapshot
-                                                        .hasError) {
-                                                      return Text(
-                                                          'Something went wrong');
-                                                    }
-
-                                                    if (categorySnapshot
-                                                            .connectionState ==
-                                                        ConnectionState
-                                                            .waiting) {
-                                                      return CircularProgressIndicator();
-                                                    }
-
-                                                    final categoryData =
-                                                        categorySnapshot
-                                                            .data!.docs.first;
-
-                                                    return Text(
-                                                      categoryData['category'],
-                                                      style: TextStyle(
-                                                        color: Colors.white,
-                                                      ),
-                                                    );
-                                                  },
-                                                ),
-                                              ],
+                                                        return Text(
+                                                          vendorData[
+                                                              'businessName'],
+                                                          style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 14
+                                                          ),
+                                                        );
+                                                      },
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         ],
