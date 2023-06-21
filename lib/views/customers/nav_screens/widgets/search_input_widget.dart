@@ -30,7 +30,7 @@ class _SearchInputWidgetState extends State<SearchInputWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(14.0),
+      padding: const EdgeInsets.only(top: 6.0,left: 8,right: 8),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),
         child: TextField(

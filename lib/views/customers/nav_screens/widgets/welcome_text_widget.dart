@@ -17,7 +17,7 @@ class _WelcomeTextState extends State<WelcomeText> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: 20, left: 15, right: 15),
+      padding: EdgeInsets.only(top: 30, left: 15, right: 15),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

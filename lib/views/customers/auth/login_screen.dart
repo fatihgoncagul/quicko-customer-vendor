@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart' hide EmailAuthProvider;
 import 'package:quicko/controllers/auth_controller.dart';
+import 'package:quicko/main.dart';
 import 'package:quicko/utils/show_snackbar.dart';
 import 'package:quicko/views/customers/auth/register_screen.dart';
 import 'package:quicko/views/customers/main_screen.dart';
-import 'package:quicko/views/customers/nav_screens/home_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -20,18 +22,42 @@ class _LoginScreenState extends State<LoginScreen> {
 
   _loginUsers() async {
     if (_formKey.currentState!.validate()) {
-      String res = await _authController.loginUsers(email, password);
-      if (res == 'success') {
-        return Navigator.push(context,
-            MaterialPageRoute(builder: (BuildContext context) {
-          return MainScreen();
-        }));
+      bool isVendorEnrolled = await checkVendorEnrollment();
+      if (isVendorEnrolled) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('Enrollment as Vendor'),
+              content: Text(
+                'You are enrolled as a vendor with your current account details. Please register as a customer with a different email.',
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
       } else {
-        return showSnack(context, res);
+        String res = await _authController.loginUsers(email, password);
+        if (res == 'success') {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (BuildContext context) => MainScreen(),
+            ),
+          );
+        } else {
+          showSnack(context, res);
+        }
       }
-      //return showSnack(context, 'You are now Logged In');
     } else {
-      return showSnack(context, 'Please Fields must be not empty');
+      showSnack(context, 'Please Fields must not be empty');
     }
   }
 
@@ -45,7 +71,14 @@ class _LoginScreenState extends State<LoginScreen> {
             color: Colors.blue.shade700,
             size: 48,
           ),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (BuildContext context) {
+                return InitialScreen();
+              }),
+            );
+          },
         ),
         title: null,
       ),
@@ -133,17 +166,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Center(
                     child: _isLoading
                         ? CircularProgressIndicator(
-                            color: Colors.white,
-                          )
+                      color: Colors.white,
+                    )
                         : Text(
-                            'Sign Up',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 4,
-                            ),
-                          ),
+                      'Sign In',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 4,
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -156,14 +189,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   TextButton(
                     onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return CustomerRegisterScreen();
-                      }));
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CustomerRegisterScreen(),
+                        ),
+                      );
                     },
                     child: Text(
                       'Register',
-                      style: TextStyle(fontSize: 18,color: Colors.blue),
+                      style: TextStyle(fontSize: 18, color: Colors.blue),
                     ),
                   ),
                 ],
@@ -173,5 +208,56 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  Future<bool> checkVendorEnrollment() async {
+    final currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser != null) {
+      String currentUserId = currentUser.uid;
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('vendors')
+          .where('vendorId', isEqualTo: currentUserId)
+          .get();
+      return querySnapshot.docs.isNotEmpty;
+    }
+    return false;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    final currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser != null) {
+      final currentUserId = currentUser.uid;
+      handleLogin(currentUserId);
+    }
+  }
+
+  void handleLogin(String currentUserId) async {
+    bool isVendorEnrolled = await checkVendorEnrollment();
+    if (isVendorEnrolled) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Enrollment as Vendor'),
+            content: Text(
+              'You are enrolled as a vendor with your current account details. Please register as a customer with a different email.',
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      // Perform login action
+      _loginUsers();
+    }
   }
 }

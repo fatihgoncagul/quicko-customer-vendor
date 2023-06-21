@@ -37,12 +37,12 @@ class _BannerWidgetState extends State<BannerWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(6.0),
       child: Container(
-          height: 140,
+          height: 120,
           width: double.infinity,
           decoration: BoxDecoration(
-            color: Colors.yellow.shade900,
+            color: Colors.blue.shade900,
             borderRadius: BorderRadius.circular(10),
           ),
           child: PageView.builder(

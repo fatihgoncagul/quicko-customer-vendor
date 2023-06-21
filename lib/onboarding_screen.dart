@@ -77,11 +77,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       style: ElevatedButton.styleFrom(
                         shape: const CircleBorder(),
                       ),
-                      child: SvgPicture.asset(
-                        'assets/icons/right-arrow-next-svgrepo-com.svg',
+                      child: Center(
+                        child: Icon(
+                          Icons.arrow_right,
+                          size: 36,
+                          color: Colors.blue,
+                        ),
                       ),
                     ),
                   ),
+
                 ],
               ),
               SizedBox(
@@ -163,19 +168,24 @@ class Onboard {
 
 final List<Onboard> demo_data = [
   Onboard(
-    image: 'assets/images/Image Popular Product 1.png',
-    title: '1',
-    description: '1',
+    image: 'assets/images/logo.png',
+    title: 'Fastest Way To Enjoy',
+    description: 'Without wasting your time and energy.Buy the products you want.',
   ),
   Onboard(
-    image: 'assets/images/Image Popular Product 1.png',
-    title: '2',
-    description: '2',
+    image: 'assets/images/choose-food.png',
+    title: 'We Offer The Best For Your Taste',
+    description: 'You will not have to think much when you meet with the products of popular brands.',
   ),
   Onboard(
-    image: 'assets/images/Image Popular Product 1.png',
-    title: '3',
-    description: '3',
+    image: 'assets/images/addtocart.png',
+    title: 'The Most Enjoyable Way To Fill Your Cart',
+    description: 'Shopping cart has never been so light.',
+  ),
+  Onboard(
+    image: 'assets/images/scan1.jfif',
+    title: 'Scan It Buy It',
+    description: 'Shopping is very fast now. Just confirm your cart and scan the Qr code at the checkout.',
   ),
 ];
 
@@ -196,7 +206,7 @@ class OnBoardContent extends StatelessWidget {
         const Spacer(),
         Image.asset(
           image,
-          height: 200,
+          height: 240,
         ),
         const Spacer(),
         Text(title,
@@ -206,7 +216,7 @@ class OnBoardContent extends StatelessWidget {
                 .headline5!
                 .copyWith(fontWeight: FontWeight.w500)),
         const SizedBox(
-          height: 60,
+          height: 20,
         ),
         Text(
           description,
