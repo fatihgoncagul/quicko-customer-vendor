@@ -35,14 +35,15 @@ class StoreText extends StatelessWidget {
               }
 
               final storeList = snapshot.data!.docs;
+              final approvedStoreList = storeList.where((storeData) => storeData['approved'] ?? false).toList();
 
               return SizedBox(
                 height: 140.0,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: storeList.length,
+                  itemCount: approvedStoreList.length,
                   itemBuilder: (context, index) {
-                    final storeData = storeList[index];
+                    final storeData = approvedStoreList[index];
                     return GestureDetector(
                       onTap: () {
                         Navigator.push(
