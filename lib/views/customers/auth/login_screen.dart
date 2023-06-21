@@ -236,7 +236,6 @@ class _LoginScreenState extends State<LoginScreen> {
   void handleLogin(String currentUserId) async {
     bool isVendorEnrolled = await checkVendorEnrollment();
     if (isVendorEnrolled) {
-      FirebaseAuth.instance.signOut(); // Sign out the user
       showDialog(
         context: context,
         builder: (context) {
