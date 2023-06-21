@@ -28,9 +28,9 @@ class _LoginScreenState extends State<LoginScreen> {
           context: context,
           builder: (context) {
             return AlertDialog(
-              title: Text('Enrollment as Vendor'),
+              title: Text('Account Creation'),
               content: Text(
-                'You are enrolled as a vendor with your current account details. Please register as a customer with a different email.',
+                'This account was created for a vendor. Please use another email to create a customer account.',
               ),
               actions: [
                 TextButton(
@@ -83,127 +83,127 @@ class _LoginScreenState extends State<LoginScreen> {
         title: null,
       ),
       body: Center(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Customer Login',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(14.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black),
-                    borderRadius: BorderRadius.circular(16.0),
+        child: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Customer Login',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
                   ),
-                  child: TextFormField(
-                    keyboardType: TextInputType.emailAddress,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please enter a valid email';
-                      } else {
-                        return null;
-                      }
-                    },
-                    onChanged: (value) {
-                      email = value;
-                    },
-                    decoration: InputDecoration(
-                      labelText: 'Email',
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(14.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.circular(16.0),
                     ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(14.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black),
-                    borderRadius: BorderRadius.circular(16.0),
-                  ),
-                  child: TextFormField(
-                    obscureText: true,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please enter a valid password';
-                      } else {
-                        return null;
-                      }
-                    },
-                    onChanged: (value) {
-                      password = value;
-                    },
-                    decoration: InputDecoration(
-                      labelText: 'Password',
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              InkWell(
-                onTap: () {
-                  _loginUsers();
-                },
-                child: Container(
-                  width: MediaQuery.of(context).size.width - 40,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Center(
-                    child: _isLoading
-                        ? CircularProgressIndicator(
-                      color: Colors.white,
-                    )
-                        : Text(
-                      'Sign In',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 4,
+                    child: TextFormField(
+                      keyboardType: TextInputType.emailAddress,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter a valid email';
+                        } else {
+                          return null;
+                        }
+                      },
+                      onChanged: (value) {
+                        email = value;
+                      },
+                      decoration: InputDecoration(
+                        labelText: 'Email',
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.symmetric(horizontal: 10),
                       ),
                     ),
                   ),
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Need an account?',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CustomerRegisterScreen(),
-                        ),
-                      );
-                    },
-                    child: Text(
-                      'Register',
-                      style: TextStyle(fontSize: 18, color: Colors.blue),
+                Padding(
+                  padding: const EdgeInsets.all(14.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.circular(16.0),
+                    ),
+                    child: TextFormField(
+                      obscureText: true,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter a valid password';
+                        } else {
+                          return null;
+                        }
+                      },
+                      onChanged: (value) {
+                        password = value;
+                      },
+                      decoration: InputDecoration(
+                        labelText: 'Password',
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                      ),
                     ),
                   ),
-                ],
-              ),
-            ],
+                ),
+                SizedBox(height: 20),
+                InkWell(
+                  onTap: () {
+                    _loginUsers();
+                  },
+                  child: Container(
+                    width: MediaQuery.of(context).size.width - 40,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Center(
+                      child: _isLoading
+                          ? CircularProgressIndicator(
+                        color: Colors.white,
+                      )
+                          : Text(
+                        'Sign In',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 4,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Need an account?',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CustomerRegisterScreen(),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        'Register',
+                        style: TextStyle(fontSize: 18, color: Colors.blue),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -236,13 +236,14 @@ class _LoginScreenState extends State<LoginScreen> {
   void handleLogin(String currentUserId) async {
     bool isVendorEnrolled = await checkVendorEnrollment();
     if (isVendorEnrolled) {
+      FirebaseAuth.instance.signOut(); // Sign out the user
       showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('Enrollment as Vendor'),
+            title: Text('Account Creation'),
             content: Text(
-              'You are enrolled as a vendor with your current account details. Please register as a customer with a different email.',
+              'This account was created for a vendor. Please use another email to create a customer account.',
             ),
             actions: [
               TextButton(

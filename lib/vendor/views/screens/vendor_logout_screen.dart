@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:quicko/main.dart';
 import 'package:quicko/vendor/views/auth/vendor_auth.dart';
 
 class VendorLogoutScreen extends StatelessWidget {
@@ -13,7 +14,7 @@ class VendorLogoutScreen extends StatelessWidget {
           await _auth.signOut();
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => VendorAuthScreen()),
+            MaterialPageRoute(builder: (context) => InitialScreen()),
           );
         },
         style: TextButton.styleFrom(

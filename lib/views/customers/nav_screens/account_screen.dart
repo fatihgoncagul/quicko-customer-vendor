@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:quicko/main.dart';
 import 'package:quicko/views/customers/auth/login_screen.dart';
 import 'package:quicko/views/inner_screens/edit_profile.dart';
 
@@ -130,7 +131,7 @@ class AccountsScreen extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) {
-                              return LoginScreen();
+                              return InitialScreen();
                             },
                           ),
                         );

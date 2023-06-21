@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart' hide EmailAuthProvider;
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
+import 'package:quicko/main.dart';
 import 'package:quicko/vendor/views/screens/landing_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -17,7 +18,11 @@ class VendorAuthScreen extends StatelessWidget {
             color: Colors.black,
             size: 32,
           ),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () {
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) {
+              return InitialScreen();
+            }));
+          },
         ),
         title: null,
       ),

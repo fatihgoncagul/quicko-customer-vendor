@@ -42,14 +42,34 @@ class _SearchScreenState extends State<SearchScreen> {
       ),
       body: _searchedValue == ''
           ? Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.arrow_upward,
+              color: Colors.blue,
+              size: 80,
+            ),
+            SizedBox(height: 10),
+            Container(
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: Colors.black),
+              ),
               child: Text(
                 'Search For Products',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
+                  color: Colors.blue,
                 ),
               ),
             )
+          ],
+        ),
+      )
           : StreamBuilder<QuerySnapshot>(
               stream: _productStream,
               builder: (BuildContext context,

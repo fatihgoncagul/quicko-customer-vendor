@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:quicko/controllers/auth_controller.dart';
+import 'package:quicko/main.dart';
 import 'package:quicko/utils/show_snackbar.dart';
 import 'package:quicko/views/customers/auth/login_screen.dart';
 
@@ -75,7 +76,14 @@ class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
             color: Colors.blue.shade700,
             size: 48,
           ),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (BuildContext context) {
+                return InitialScreen();
+              }),
+            );
+          },
         ),
         title: null,
       ),
