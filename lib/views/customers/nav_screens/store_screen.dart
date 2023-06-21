@@ -9,7 +9,7 @@ class StoreScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Stream<QuerySnapshot> _vendorsStream =
-        FirebaseFirestore.instance.collection('vendors').snapshots();
+    FirebaseFirestore.instance.collection('vendors').snapshots();
 
     return Scaffold(
       appBar: AppBar(
@@ -46,6 +46,14 @@ class StoreScreen extends StatelessWidget {
               itemCount: snapshot.data!.size,
               itemBuilder: (context, index) {
                 final storeData = snapshot.data!.docs[index];
+
+                // Check if the store is approved
+                bool isApproved = storeData['approved'] ?? false;
+                if (!isApproved) {
+                  // If not approved, return an empty container
+                  return Container();
+                }
+
                 return GestureDetector(
                   onTap: () {
                     Navigator.push(

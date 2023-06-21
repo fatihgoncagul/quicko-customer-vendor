@@ -105,13 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     child: TextFormField(
                       keyboardType: TextInputType.emailAddress,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please enter a valid email';
-                        } else {
-                          return null;
-                        }
-                      },
+
                       onChanged: (value) {
                         email = value;
                       },
@@ -132,13 +126,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     child: TextFormField(
                       obscureText: true,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please enter a valid password';
-                        } else {
-                          return null;
-                        }
-                      },
                       onChanged: (value) {
                         password = value;
                       },
