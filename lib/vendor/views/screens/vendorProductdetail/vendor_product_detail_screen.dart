@@ -30,7 +30,6 @@ class _VendorProductDetailScreenState extends State<VendorProductDetailScreen> {
       _quantityController.text = widget.productData['productQuantity'].toString();
       _productPriceController.text =
           widget.productData['productPrice'].toString();
-
       _productDescriptionController.text = widget.productData['description'];
       _categoryNameController.text = widget.productData['category'];
     });
@@ -44,8 +43,9 @@ class _VendorProductDetailScreenState extends State<VendorProductDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
-        elevation: 0,
+        backgroundColor: Colors.blue.shade700,
+        elevation: 8,
+        centerTitle: true,
         title: Text(
           widget.productData['productName'],
         ),
@@ -58,6 +58,7 @@ class _VendorProductDetailScreenState extends State<VendorProductDetailScreen> {
               controller: _productNameController,
               decoration: InputDecoration(labelText: 'Product Name'),
             ),
+
 
             SizedBox(
               height: 20,
@@ -115,7 +116,7 @@ class _VendorProductDetailScreenState extends State<VendorProductDetailScreen> {
                 'category': _categoryNameController.text,
               });
             } else {
-              showSnack(context, 'Upadated Succcesfully');
+              showSnack(context, 'Product Uptaded');
             }
           },
           child: Container(
